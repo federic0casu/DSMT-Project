@@ -24,9 +24,9 @@ The system must allow an *Admin* to:
 	- UC5.1: For each vehicle display its current state (rented, mileage, status, possible frauds, ...)
 
 
-## Architecture
+## Technologies
 
-1. Spring Boot (to support the web-based dashboard).
+1. Docker.
 
 2. MySQL (to support login, vehicles and logging system).
 
