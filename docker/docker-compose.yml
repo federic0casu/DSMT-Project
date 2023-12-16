@@ -1,0 +1,35 @@
+version: '3'
+services:
+  db: 
+    image: mysql:latest
+    container_name: db
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=1
+      - MYSQL_DATABASE=fraud_detection_db
+      - MYSQL_USER=fraud_detection_user
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD} # this should live in a env var
+    volumes:
+      - "./../db:/docker-entrypoint-initdb.d" # this is how we persist a sql db even when container stops
+    ports:
+      - "3306:3306"
+      - "33060:33060"
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    depends_on:
+      - db
+    ports:
+      - "8001:80"
+    environment:
+      - PMA_HOST=db
+      - PMA_PORT=3306
+  web:
+    container_name: web
+    depends_on:
+      - db
+    build:
+      context: "."
+      dockerfile: "dockerfile-web" 
+    ports:
+      - "8080:8080"
+    command: ['catalina.sh', 'run']
