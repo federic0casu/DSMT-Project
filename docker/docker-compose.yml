@@ -1,5 +1,89 @@
 version: '3'
 services:
+  ## KAFKA CONTAINERS
+  zookeeper:
+    container_name: zookeeper-dsmt
+    image: bitnami/zookeeper:3.9.1
+    ports:
+      - 2181:2181
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes  
+
+
+  kafka:
+    container_name: kafka-dsmt
+    image: bitnami/kafka:3.6.0
+    depends_on:
+      - zookeeper
+    ports:
+      - "19092:19092"
+    volumes:
+      - "kafka_data:/bitnami"
+    environment:
+      KAFKA_ENABLE_KRAFT: no # due to https://github.com/bitnami/containers/issues/4315
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:9092,CONNECTIONS_FROM_HOST://localhost:19092
+      KAFKA_LISTENERS: "INTERNAL://:9092,CONNECTIONS_FROM_HOST://:19092"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,CONNECTIONS_FROM_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      ALLOW_PLAINTEXT_LISTENER: yes
+  
+  ## KAFKA CONNECTOR
+  kafka-connect:
+      container_name: kafka_connect-dsmt
+      image: confluentinc/cp-kafka-connect:7.5.1
+      ports:
+        - 8083:8083
+      volumes:
+        - kafka_connect_data:/data
+      depends_on:
+        - zookeeper
+        - kafka
+      environment:
+        CONNECT_BOOTSTRAP_SERVERS: kafka:9092
+        CONNECT_GROUP_ID: kafka-connect
+        CONNECT_CONFIG_STORAGE_TOPIC: _connect-configs
+        CONNECT_OFFSET_STORAGE_TOPIC: _connect-offsets
+        CONNECT_STATUS_STORAGE_TOPIC: _connect-status
+        CONNECT_KEY_CONVERTER: org.apache.kafka.connect.storage.StringConverter
+        CONNECT_VALUE_CONVERTER: org.apache.kafka.connect.storage.StringConverter
+        CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
+        CONNECT_REST_ADVERTISED_HOST_NAME: "kafka-connect"
+        CONNECT_LOG4J_APPENDER_STDOUT_LAYOUT_CONVERSIONPATTERN: "[%d] %p %X{connector.context}%m (%c:%L)%n"
+        CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: "1"
+        CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: "1"
+        CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "1"
+
+  redpanda:
+    container_name: redpanda-console-dsmt
+    image: redpandadata/console:v2.3.5
+    environment:
+      KAFKA_BROKERS: kafka:9092
+    ports:
+      - 8082:8082
+    depends_on:
+      - kafka
+      - kafka-connect
+
+
+  jobmanager:
+    image: apache/flink:1.18-java17
+    container_name: flink-jobmanager-dsmt
+    command: jobmanager
+    ports:
+      - "8081:8081"  # Flink Web UI port
+    environment:
+      - JOB_MANAGER_RPC_ADDRESS=jobmanager
+
+  taskmanager1:
+    image: apache/flink:1.18.0-java17
+    container_name: flink-taskmanager-dsmt
+    command: taskmanager
+    depends_on:
+      - jobmanager
+    environment:
+      - JOB_MANAGER_RPC_ADDRESS=jobmanager
+
   db: 
     image: mysql:latest
     container_name: db
@@ -9,10 +93,7 @@ services:
       - MYSQL_USER=fraud_detection_user
       - MYSQL_PASSWORD=${MYSQL_PASSWORD} # this should live in a env var
     volumes:
-      - "./../db:/docker-entrypoint-initdb.d" # this is how we persist a sql db even when container stops
-    ports:
-      - "3306:3306"
-      - "33060:33060"
+      - "./../db:/docker-entrypoint-initdb.d" # this is how we persist a sql db even when container stops  
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
@@ -33,3 +114,9 @@ services:
     ports:
       - "8080:8080"
     command: ['catalina.sh', 'run']
+
+volumes:
+  kafka_data:
+    driver: local
+  influxdb_data: {}
+  kafka_connect_data: {}

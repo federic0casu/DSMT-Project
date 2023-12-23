@@ -19,9 +19,11 @@ public class MySQLConnector {
             throw new RuntimeException(e.getMessage());
         }
     }
+
     public Connection getConnection() {
         return connection;
     }
+ 
     public void closeConnection() {
         try {
             if (connection != null && !connection.isClosed()) {
