@@ -1,0 +1,5 @@
+comando per copiare il jar dentro il container: 
+docker cp ./target/fraud-detector-1.0-jar-with-dependencies.jar 57ca9b99c1b4:/
+
+comando per runnare il jar dentro il container:
+docker exec -ti 57ca9b99c1b4 flink run -d -c "it.unipi.dsmt.Main" /fraud-detector-1.0-jar-with-dependencies.jar

@@ -5,19 +5,41 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c2ea0a5a-f272-4019-a4a9-4a7e9077c9c9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/UppercaseMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/howto.md" beforeDir="false" afterPath="$PROJECT_DIR$/howto.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flink-processor/fraud-detector/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/flink-processor/fraud-detector/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/StreamingJob.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/upstream-producers/orders-simulator/src/main/java/org/oncode/OrderTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/upstream-producers/orders-simulator/src/main/java/org/oncode/OrderTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/upstream-producers/orders-simulator/target/classes/org/oncode/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/upstream-producers/orders-simulator/target/classes/org/oncode/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/upstream-producers/orders-simulator/target/classes/org/oncode/OrderTask.class" beforeDir="false" afterPath="$PROJECT_DIR$/upstream-producers/orders-simulator/target/classes/org/oncode/OrderTask.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/upstream-producers/orders-simulator/target/classes/org/oncode/models/Customer$CustomerBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/upstream-producers/orders-simulator/target/classes/org/oncode/models/Customer$CustomerBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/upstream-producers/orders-simulator/target/classes/org/oncode/models/Customer.class" beforeDir="false" afterPath="$PROJECT_DIR$/upstream-producers/orders-simulator/target/classes/org/oncode/models/Customer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/upstream-producers/orders-simulator/target/classes/org/oncode/models/Order$OrderBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/upstream-producers/orders-simulator/target/classes/org/oncode/models/Order$OrderBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/upstream-producers/orders-simulator/target/classes/org/oncode/models/Order.class" beforeDir="false" afterPath="$PROJECT_DIR$/upstream-producers/orders-simulator/target/classes/org/oncode/models/Order.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenRunner">
+    <option name="delegateBuildToMaven" value="true" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
@@ -38,6 +60,8 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "configurable.group.build",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -51,6 +75,10 @@
       <updated>1703280922303</updated>
       <workItem from="1703280923411" duration="37000" />
       <workItem from="1703436409543" duration="1026000" />
+      <workItem from="1703605720389" duration="1043000" />
+      <workItem from="1703609101188" duration="6061000" />
+      <workItem from="1703683667032" duration="3307000" />
+      <workItem from="1703860588638" duration="8915000" />
     </task>
     <servers />
   </component>
