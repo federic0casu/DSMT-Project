@@ -5,20 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c2ea0a5a-f272-4019-a4a9-4a7e9077c9c9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/UppercaseMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flink-processor/fraud-detector/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/flink-processor/fraud-detector/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/StreamingJob.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/upstream-producers/orders-simulator/src/main/java/org/oncode/OrderTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/upstream-producers/orders-simulator/src/main/java/org/oncode/OrderTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/upstream-producers/orders-simulator/target/classes/org/oncode/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/upstream-producers/orders-simulator/target/classes/org/oncode/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/upstream-producers/orders-simulator/target/classes/org/oncode/OrderTask.class" beforeDir="false" afterPath="$PROJECT_DIR$/upstream-producers/orders-simulator/target/classes/org/oncode/OrderTask.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/upstream-producers/orders-simulator/target/classes/org/oncode/models/Customer$CustomerBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/upstream-producers/orders-simulator/target/classes/org/oncode/models/Customer$CustomerBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/upstream-producers/orders-simulator/target/classes/org/oncode/models/Customer.class" beforeDir="false" afterPath="$PROJECT_DIR$/upstream-producers/orders-simulator/target/classes/org/oncode/models/Customer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/upstream-producers/orders-simulator/target/classes/org/oncode/models/Order$OrderBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/upstream-producers/orders-simulator/target/classes/org/oncode/models/Order$OrderBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/upstream-producers/orders-simulator/target/classes/org/oncode/models/Order.class" beforeDir="false" afterPath="$PROJECT_DIR$/upstream-producers/orders-simulator/target/classes/org/oncode/models/Order.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/upstream-producers/orders-simulator/src/main/java/org/oncode/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/upstream-producers/orders-simulator/src/main/java/org/oncode/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,8 +41,8 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "daniel",
-    "last_opened_file_path": "/Users/daniel/dsmt-project",
+    "git-widget-placeholder": "federico-geoloc-vehicles",
+    "last_opened_file_path": "/home/federico/Documents/DSMT/DSMT-Project",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -79,6 +66,7 @@
       <workItem from="1703609101188" duration="6061000" />
       <workItem from="1703683667032" duration="3307000" />
       <workItem from="1703860588638" duration="8915000" />
+      <workItem from="1705320777306" duration="540000" />
     </task>
     <servers />
   </component>

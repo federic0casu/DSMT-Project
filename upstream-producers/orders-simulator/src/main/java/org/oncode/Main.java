@@ -20,14 +20,15 @@ public class Main {
 
 
         try {
-            ExecutorService executor = Executors.newFixedThreadPool(CUSTOMER_NUMBER);
+            try (ExecutorService executor = Executors.newFixedThreadPool(CUSTOMER_NUMBER)) {
 
-            for (Customer c : customersMap.values()) {
-                Runnable orderTask = new OrderTask(c);
-                executor.execute(orderTask);
+                for (Customer c : customersMap.values()) {
+                    Runnable orderTask = new OrderTask(c);
+                    executor.execute(orderTask);
+                }
+
+                executor.shutdown();
             }
-
-            executor.shutdown();
         } catch (Exception e) {
             logger.error(e.toString());
             throw new RuntimeException(e);
