@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="web-app:war" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="42927778-88cc-4945-a187-0aaba3ee17c9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../fleet-simulator/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fleet-simulator/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fleet-simulator/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fleet-simulator/src/main/java/it/unipi/dsmt/CarTask.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fleet-simulator/src/main/java/it/unipi/dsmt/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fleet-simulator/src/main/java/it/unipi/dsmt/models/Car.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fleet-simulator/src/main/java/it/unipi/dsmt/models/GeoLocalizationEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fleet-simulator/src/main/resources/centrale_oncode.gpx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fleet-simulator/src/main/resources/linate_oncode.gpx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../fleet-simulator/src/main/resources/simplelogger.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/unipi/dsmt/DTO/GeoLocalizationDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/unipi/dsmt/models/Car.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/unipi/dsmt/serializers/GeoLocalizationDTOEncoder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/unipi/dsmt/utility/Constants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/unipi/dsmt/websockets/GeoLocalizationEndpoint.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/simplelogger.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Makefile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docker/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docker/target/web-app.war" beforeDir="false" afterPath="$PROJECT_DIR$/../docker/target/web-app.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/UppercaseMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/UppercaseMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../upstream-producers/orders-simulator/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../upstream-producers/orders-simulator/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../upstream-producers/orders-simulator/src/main/java/org/oncode/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../upstream-producers/orders-simulator/src/main/java/org/oncode/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../upstream-producers/orders-simulator/target/classes/org/oncode/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../upstream-producers/orders-simulator/target/classes/org/oncode/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unipi/dsmt/javaee/webapp/DAO/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unipi/dsmt/DAO/UserDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unipi/dsmt/javaee/webapp/DTO/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unipi/dsmt/DTO/UserDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unipi/dsmt/javaee/webapp/repository/MySQLConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unipi/dsmt/repository/MySQLConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unipi/dsmt/javaee/webapp/servlets/LoginServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unipi/dsmt/servlets/LoginServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unipi/dsmt/javaee/webapp/websockets/EventEndpoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unipi/dsmt/websockets/EventEndpoint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unipi/dsmt/javaee/webapp/websockets/FraudEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unipi/dsmt/websockets/FraudEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unipi/dsmt/javaee/webapp/websockets/GeoLocalizationEndpoint.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/css/map.style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/css/map.style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/map.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/js/map.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/websockets.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/js/websockets.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/pages/map.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/pages/map.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2b0Bt55VvUJ7WptxS42lEKhBzAG" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;federico-geoloc-vehicles&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/federico/Documents/DSMT/DSMT-Project/web-app/src/main/java/it/unipi/dsmt&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/it/unipi/dsmt" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="docker-compose" type="docker-deploy" factoryName="docker-compose.yml" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="envFilePath" value="" />
+          <option name="commandLineOptions" value="--build" />
+          <option name="sourceFilePath" value="../docker/docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2">
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="web-app:war" />
+        </option>
+        <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_cp" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="42927778-88cc-4945-a187-0aaba3ee17c9" name="Changes" comment="" />
+      <created>1705342329058</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1705342329058</updated>
+      <workItem from="1705342333503" duration="5447000" />
+      <workItem from="1705397642492" duration="5755000" />
+      <workItem from="1705410674420" duration="7476000" />
+      <workItem from="1705419836906" duration="6275000" />
+      <workItem from="1705427100551" duration="3836000" />
+      <workItem from="1705432925780" duration="7262000" />
+      <workItem from="1705487255599" duration="8505000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

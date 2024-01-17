@@ -5,7 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c2ea0a5a-f272-4019-a4a9-4a7e9077c9c9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/javaee/webapp/utils/JsonUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/UppercaseMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/UppercaseMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/upstream-producers/orders-simulator/src/main/java/org/oncode/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/upstream-producers/orders-simulator/src/main/java/org/oncode/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/upstream-producers/orders-simulator/target/classes/org/oncode/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/upstream-producers/orders-simulator/target/classes/org/oncode/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/javaee/webapp/websockets/GeoLocalizationEndpoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/javaee/webapp/websockets/GeoLocalizationEndpoint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-app/src/main/webapp/js/map.js" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/main/webapp/js/map.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-app/src/main/webapp/js/websockets.js" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/main/webapp/js/websockets.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-app/src/main/webapp/pages/map.html" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/main/webapp/pages/map.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +31,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="d4d53489fd995ad02b7b5a5a3510ff29df13b773" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -36,22 +52,44 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "federico-geoloc-vehicles",
-    "last_opened_file_path": "/home/federico/Documents/DSMT/DSMT-Project",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "configurable.group.build",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;federico-geoloc-vehicles&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/federico/Documents/DSMT/DSMT-Project/web-app/src/main/java/it/unipi/dsmt/javaee/webapp/models&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.build&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/javaee/webapp/models" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
+      <deployment type="dockerfile">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="web-app" type="docker-deploy" factoryName="docker-compose.yml" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="envFilePath" value="" />
+          <option name="sourceFilePath" value="docker/docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -66,7 +104,11 @@
       <workItem from="1703609101188" duration="6061000" />
       <workItem from="1703683667032" duration="3307000" />
       <workItem from="1703860588638" duration="8915000" />
-      <workItem from="1705320777306" duration="540000" />
+      <workItem from="1705320777306" duration="2483000" />
+      <workItem from="1705324063739" duration="239000" />
+      <workItem from="1705326715831" duration="252000" />
+      <workItem from="1705329176105" duration="6152000" />
+      <workItem from="1705336481484" duration="16000" />
     </task>
     <servers />
   </component>

@@ -58,6 +58,8 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
       KAFKA_DELETE_TOPIC_ENABLE: "true"
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 1
+      # KAFKA_CREATE_TOPICS: "cars-data"
 
   jobmanager:
     image: apache/flink:1.18-java17
@@ -68,7 +70,7 @@ services:
     environment:
       - JOB_MANAGER_RPC_ADDRESS=jobmanager
 
-  taskmanager1:
+  taskmanager:
     image: apache/flink:1.18.0-java17
     container_name: flink-taskmanager-1
     command: taskmanager

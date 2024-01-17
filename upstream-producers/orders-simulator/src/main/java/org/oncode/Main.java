@@ -18,17 +18,15 @@ public class Main {
     public static void main(String[] args) {
         var customersMap = generateCustomers();
 
-
         try {
-            try (ExecutorService executor = Executors.newFixedThreadPool(CUSTOMER_NUMBER)) {
+            ExecutorService executor = Executors.newFixedThreadPool(CUSTOMER_NUMBER);
 
-                for (Customer c : customersMap.values()) {
-                    Runnable orderTask = new OrderTask(c);
-                    executor.execute(orderTask);
-                }
-
-                executor.shutdown();
+            for (Customer c : customersMap.values()) {
+                Runnable orderTask = new OrderTask(c);
+                executor.execute(orderTask);
             }
+
+            executor.shutdown();
         } catch (Exception e) {
             logger.error(e.toString());
             throw new RuntimeException(e);

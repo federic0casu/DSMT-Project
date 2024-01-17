@@ -31,7 +31,6 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.consumer.OffsetResetStrategy;
 import org.apache.kafka.clients.producer.KafkaProducer;
 
-import java.util.Collections;
 import java.util.Properties;
 
 public class Main {
@@ -41,7 +40,6 @@ public class Main {
 
 		try (StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment()) {
 
-
 			// kafka consumer
 			Properties consumerProperties = new Properties();
 			consumerProperties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
@@ -49,17 +47,13 @@ public class Main {
 			consumerProperties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, OffsetResetStrategy.EARLIEST.name().toLowerCase());
 
 			FlinkKafkaConsumer<String> kafkaConsumer = new FlinkKafkaConsumer<>(
-					"orders",                  // source Kafka topic
+					"orders",             // source Kafka topic
 					new SimpleStringSchema(),   // deserialization schema
 					consumerProperties
 			);
 
 			DataStream<String> kafkaStream = env.addSource(kafkaConsumer);
 			kafkaStream.print();
-
-
-
-
 
 			env.execute("Flink Streaming Java API Skeleton");
 
