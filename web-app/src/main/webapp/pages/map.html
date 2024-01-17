@@ -3,14 +3,13 @@
     <head>
         <title>Fleet Map</title>
         <link rel="stylesheet" type="text/css" href="../css/map.style.css" />
-        <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqjeMfnBivU_8MEuBhjNF7xHD3C1vnUoE&callback=console.debug&libraries=maps,marker&v=beta"></script>
-        <script type="module" src="../js/map.js"></script>
-        <link rel="stylesheet" href="./style.css"/>
+        <script defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqjeMfnBivU_8MEuBhjNF7xHD3C1vnUoE&callback=console.debug&libraries=maps,marker&v=beta"
+                type="text/javascript"></script>
+        <script src="../js/map.js" type="text/javascript"></script>
     </head>
     <body>
-        <gmp-map center="43.71465301513672,10.396681785583496" zoom="14" map-id="DEMO_MAP_ID">
-            <gmp-advanced-marker position="43.71465301513672,10.396681785583496" title="My location">
-            </gmp-advanced-marker>
-        </gmp-map>
+        <div id="map">
+        </div>
     </body>
 </html>

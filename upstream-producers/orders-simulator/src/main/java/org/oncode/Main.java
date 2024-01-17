@@ -18,7 +18,6 @@ public class Main {
     public static void main(String[] args) {
         var customersMap = generateCustomers();
 
-
         try {
             ExecutorService executor = Executors.newFixedThreadPool(CUSTOMER_NUMBER);
 
