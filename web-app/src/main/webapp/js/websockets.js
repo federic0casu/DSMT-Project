@@ -1,4 +1,4 @@
-const fraudEventSocket = new WebSocket('ws://localhost:8080/web_app/events/fraud');
+const fraudEventSocket = new WebSocket('ws://localhost:8080/web-app/events/fraud');
 fraudEventSocket.onmessage = function (event) {
     const eventData = JSON.parse(event.data);
     const tableBody = document.querySelector("#eventTable tbody");

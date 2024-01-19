@@ -73,8 +73,6 @@ public class Main {
 							.trigger(CountTrigger.of(10))
 							.process(new RateWindowFunction());
 
-			highRateOrdersStream.sinkTo(sink);
-			largeOrdersStream.sinkTo(sink);
 			/*
 				Detecting Multiple transaction in the same window from different Locations
 			*/
@@ -82,6 +80,10 @@ public class Main {
 			DataStream<Fraud> multipleLocationsOrderStream = stream
 					.keyBy(order -> order.getCustomer().getId())
 					.process(new MultipleLocationFunction());
+
+			highRateOrdersStream.sinkTo(sink);
+			largeOrdersStream.sinkTo(sink);
+			multipleLocationsOrderStream.sinkTo(sink);
 
 			env.setParallelism(1);
 			env.execute("Flink Streaming Java API Skeleton");
