@@ -12,8 +12,8 @@ services:
     volumes:
       - "./../db:/docker-entrypoint-initdb.d" # this is how we persist a sql db even when container stops
     ports:
-      - "3306:3306"
-      - "33060:33060"
+      - "3307:3307"
+      - "33061:33061"
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -64,11 +64,16 @@ services:
   jobmanager:
     image: apache/flink:1.18-java17
     container_name: flink-jobmanager
-    command: jobmanager
+    command:
+      - jobmanager
+      - flink run -d -c "it.unipi.dsmt.Main" job/fraud-detector-1.0-jar-with-dependencies.jar
     ports:
       - "8081:8081"  # Flink Web UI port
     environment:
       - JOB_MANAGER_RPC_ADDRESS=jobmanager
+    volumes:
+      - ./target/fraud-detector-1.0-jar-with-dependencies.jar:/opt/flink/job/fraud-detector-1.0-jar-with-dependencies.jar
+
 
   taskmanager:
     image: apache/flink:1.18.0-java17
