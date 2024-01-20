@@ -1,65 +1,53 @@
 package it.unipi.dsmt.websockets;
 
-
-import it.unipi.dsmt.DTO.GeoLocalizationDTO;
+import it.unipi.dsmt.DTO.FraudEventDTO;
 import it.unipi.dsmt.Kafka.KafkaUtils;
-import jakarta.websocket.OnClose;
-import jakarta.websocket.OnOpen;
-import jakarta.websocket.Session;
-import jakarta.websocket.server.ServerEndpoint;
+import it.unipi.dsmt.models.Car;
+import it.unipi.dsmt.DTO.GeoLocalizationDTO;
+import it.unipi.dsmt.serializers.FraudEventDTOEncoder;
+import it.unipi.dsmt.serializers.GeoLocalizationDTOEncoder;
+
+import it.unipi.dsmt.utility.Constants;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import jakarta.websocket.OnOpen;
+import jakarta.websocket.OnClose;
+import jakarta.websocket.Session;
+import jakarta.websocket.server.ServerEndpoint;
 
-@ServerEndpoint(value = "/events/fraud")
+import java.util.concurrent.*;
+
+import static it.unipi.dsmt.Kafka.KafkaUtils.send;
+
+@ServerEndpoint(value = "/events/frauds", encoders = FraudEventDTOEncoder.class)
 public class FraudEventEndpoint implements EventEndpoint {
+    private static final Logger logger = LoggerFactory.getLogger(FraudEventEndpoint.class);
     private static final CopyOnWriteArrayList<Session> sessions = new CopyOnWriteArrayList<>();
-    private static final KafkaConsumer<String, String> consumer = KafkaUtils.createKafkaConsumer();
-    private static final Logger logger = LoggerFactory.getLogger(GeoLocalizationEndpoint.class);;
+    // refactor createkafkaconsumer
+    private static final KafkaConsumer<String, String> consumer =
+            KafkaUtils.createKafkaConsumer(Constants.TOPIC_FRAUDS);
     private static ExecutorService executorService = Executors.newSingleThreadExecutor();
-    private static Future<?> future = null;
 
     @OnOpen
     public void onOpen(Session session) {
         // Add the new session to the list
-        logger.info("WebSocket Session OPENED: {}", session.getId());
         sessions.add(session);
+        logger.info("WebSocket Session OPENED: {}", session.getId());
 
-        // TODO: Usare executorService?
-        if (!future.equals(null) || future.isCancelled()) {
-            // Wrap the KafkaUtils.consumeKafkaMessages in a Runnable
-            Class<GeoLocalizationDTO> valueType = GeoLocalizationDTO.class;
-            Runnable kafkaTask = () -> KafkaUtils.consumeKafkaMessages(consumer,
-                    sessions,valueType);
-            // Submit the task to the ExecutorServic
-            future = executorService.submit(kafkaTask);
-        }
+        // Start a new thread for handling sessions
+        // Wrap the KafkaUtils.consumeKafkaMessages in a Runnable
+        Class<FraudEventDTO> valueType = FraudEventDTO.class;
+        Runnable kafkaTask = () -> KafkaUtils.consumeKafkaMessages(consumer,sessions,valueType);
+        // Submit the task to the ExecutorService
+        Future<?> future = executorService.submit(kafkaTask);
     }
     @OnClose
     public void onClose(Session session) {
         // Remove the closed session from the list
         sessions.remove(session);
         logger.info("WebSocket Session CLOSED: {}", session.getId());
-
-        if (sessions.isEmpty()) {
-            future.cancel(true);
-        }
-    }
-    public void sendFraudEventUpdate(String timestamp, String severity, String event, String description) {
-        String message = String.format("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>", timestamp, severity, event, description);
-        for (Session session : sessions) {
-            try {
-                session.getBasicRemote().sendText(message);
-            } catch (IOException e) {
-                System.err.println(e.getMessage());
-            }
-        }
     }
 }
-

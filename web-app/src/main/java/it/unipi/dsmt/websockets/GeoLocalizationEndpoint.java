@@ -5,6 +5,7 @@ import it.unipi.dsmt.models.Car;
 import it.unipi.dsmt.DTO.GeoLocalizationDTO;
 import it.unipi.dsmt.serializers.GeoLocalizationDTOEncoder;
 
+import it.unipi.dsmt.utility.Constants;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 
 import org.slf4j.Logger;
@@ -23,7 +24,8 @@ import static it.unipi.dsmt.Kafka.KafkaUtils.send;
 public class GeoLocalizationEndpoint implements EventEndpoint {
     private static final Logger logger = LoggerFactory.getLogger(GeoLocalizationEndpoint.class);
     private static final CopyOnWriteArrayList<Session> sessions = new CopyOnWriteArrayList<>();
-    private static final KafkaConsumer<String, String> consumer = KafkaUtils.createKafkaConsumer();
+    private static final KafkaConsumer<String, String> consumer =
+            KafkaUtils.createKafkaConsumer(Constants.TOPIC_CARS);
     private static ExecutorService executorService = Executors.newSingleThreadExecutor();
 
 

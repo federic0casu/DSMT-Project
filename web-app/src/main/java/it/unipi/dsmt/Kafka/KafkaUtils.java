@@ -21,7 +21,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class KafkaUtils {
     private static final Logger logger = LoggerFactory.getLogger(KafkaUtils.class);
-    public static KafkaConsumer<String, String> createKafkaConsumer() {
+    public static KafkaConsumer<String, String> createKafkaConsumer(String topic) {
         Properties props = new Properties();
         props.put(ConsumerConfig.GROUP_ID_CONFIG, Constants.GROUP_DEFAULT);
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, Constants.KAFKA_ENDPOINT);
@@ -30,7 +30,7 @@ public class KafkaUtils {
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
-        consumer.subscribe(List.of(Constants.TOPIC));
+        consumer.subscribe(List.of(topic));
 
         return consumer;
     }
