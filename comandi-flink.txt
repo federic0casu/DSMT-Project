@@ -9,3 +9,11 @@ comandi kafka
 
 printare il contenuto di un topic
 kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic first_topic
+
+inserire un messaggio in un topic (usato per inserire manualmente la logica di controllo
+nel topic rules in caso di aggiornamento dinamico della logica di flink)
+
+
+echo "{messaggio}" | kafka-console-producer.sh --broker-list <indirizzo-del-broker>
+--topic
+<nome-del-topic>

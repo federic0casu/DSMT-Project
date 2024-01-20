@@ -1,0 +1,13 @@
+{
+  "ruleId": "rule123",
+  "description": "Verifica se il valore di 'campoA' è maggiore di 10",
+  "condition": {
+    "field": "campoA",
+    "operator": "greaterThan",
+    "value": 10
+  },
+  "action": {
+    "type": "log",
+    "message": "Il valore di 'campoA' supera 10"
+  }
+}

@@ -60,7 +60,7 @@ public class Main {
 			 	require grouping by a key or keeping state information
 			*/
 			DataStream<Fraud> largeOrdersStream = stream
-					.filter(order -> order.getAmount() > 10)
+					.filter(order -> order.getAmount() > 1000)
 					.map(new FraudEnrichment());
 
 			/*
@@ -76,7 +76,6 @@ public class Main {
 			/*
 				Detecting Multiple transaction in the same window from different Locations
 			*/
-
 			DataStream<Fraud> multipleLocationsOrderStream = stream
 					.keyBy(order -> order.getCustomer().getId())
 					.process(new MultipleLocationFunction());

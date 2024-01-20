@@ -5,18 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c2ea0a5a-f272-4019-a4a9-4a7e9077c9c9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Models/Keyed.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ruleExample.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/comandi-flink.txt" beforeDir="false" afterPath="$PROJECT_DIR$/comandi-flink.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/DTO/FraudEventDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/DTO/FraudEventDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/Kafka/KafkaUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/Kafka/KafkaUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/serializers/FraudEventDTOEncoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/serializers/FraudEventDTOEncoder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/utility/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/utility/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/websockets/FraudEventEndpoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/websockets/FraudEventEndpoint.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/websockets/GeoLocalizationEndpoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/websockets/GeoLocalizationEndpoint.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-app/src/main/webapp/js/websockets.js" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/main/webapp/js/frauds.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-app/src/main/webapp/pages/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/main/webapp/pages/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -155,7 +148,7 @@
       <workItem from="1705503188597" duration="11813000" />
       <workItem from="1705530745754" duration="4906000" />
       <workItem from="1705567771764" duration="55398000" />
-      <workItem from="1705738676858" duration="5717000" />
+      <workItem from="1705738676858" duration="6873000" />
     </task>
     <servers />
   </component>
