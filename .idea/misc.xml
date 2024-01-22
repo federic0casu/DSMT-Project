@@ -6,6 +6,9 @@
       <list>
         <option value="$PROJECT_DIR$/flink-processor/fraud-detector/pom.xml" />
         <option value="$PROJECT_DIR$/upstream-producers/orders-simulator/pom.xml" />
+        <option value="$PROJECT_DIR$/fleet-simulator/pom.xml" />
+        <option value="$PROJECT_DIR$/upstream-producers/fleet-simulator/pom.xml" />
+        <option value="$PROJECT_DIR$/web-app/pom.xml" />
       </list>
     </option>
   </component>

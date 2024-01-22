@@ -47,7 +47,7 @@ async function updateMapWithCarLocation(vin, latitude, longitude) {
 document.addEventListener("DOMContentLoaded", function () {
     initMap().then(r => {
         const host = document.location.host;
-        const url = "ws://" + host + "/web_app/events/geo-localization";
+        const url = "ws://" + host + "/web-app/events/geo-localization";
 
         const geoLocalizationEventSocket = new WebSocket(url);
 

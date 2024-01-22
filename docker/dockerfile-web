@@ -1,6 +1,6 @@
 FROM tomcat:latest
 
-ADD target/web-app.war /usr/local/tomcat/webapps/web_app.war
+ADD target/web-app.war /usr/local/tomcat/webapps/web-app.war
 ADD tomcat-users.xml /usr/local/tomcat/conf/tomcat-users.xml
 
 EXPOSE 8080

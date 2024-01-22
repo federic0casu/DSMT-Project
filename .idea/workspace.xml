@@ -5,18 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c2ea0a5a-f272-4019-a4a9-4a7e9077c9c9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/javaee/webapp/utils/JsonUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/UppercaseMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/UppercaseMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/upstream-producers/orders-simulator/src/main/java/org/oncode/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/upstream-producers/orders-simulator/src/main/java/org/oncode/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/upstream-producers/orders-simulator/target/classes/org/oncode/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/upstream-producers/orders-simulator/target/classes/org/oncode/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/javaee/webapp/websockets/GeoLocalizationEndpoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/javaee/webapp/websockets/GeoLocalizationEndpoint.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-app/src/main/webapp/js/map.js" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/main/webapp/js/map.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-app/src/main/webapp/js/websockets.js" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/main/webapp/js/websockets.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web-app/src/main/webapp/pages/map.html" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/main/webapp/pages/map.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/comandi-flink.txt" beforeDir="false" afterPath="$PROJECT_DIR$/comandi-flink.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/DTO/FraudEventDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/DTO/FraudEventDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/Kafka/KafkaUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/Kafka/KafkaUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/serializers/FraudEventDTOEncoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/serializers/FraudEventDTOEncoder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/utility/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/utility/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/websockets/FraudEventEndpoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/websockets/FraudEventEndpoint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/websockets/GeoLocalizationEndpoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/websockets/GeoLocalizationEndpoint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-app/src/main/webapp/js/websockets.js" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/main/webapp/js/frauds.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-app/src/main/webapp/pages/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/main/webapp/pages/dashboard.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,9 +56,10 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;federico-geoloc-vehicles&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/federico/Documents/DSMT/DSMT-Project/web-app/src/main/java/it/unipi/dsmt/javaee/webapp/models&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/daniel/dsmt-project&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -72,8 +73,41 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/javaee/webapp/models" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/upstream-producers" />
+    </key>
   </component>
   <component name="RunManager">
+    <configuration name="fraud-detector [clean,package]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="cmdOptions" />
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="clean" />
+                <option value="package" />
+              </list>
+            </option>
+            <option name="pomFileName" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="projectsCmdOptionValues">
+              <list />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$/flink-processor/fraud-detector" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
       <deployment type="dockerfile">
         <settings />
@@ -87,8 +121,17 @@
           <option name="sourceFilePath" value="docker/docker-compose.yml" />
         </settings>
       </deployment>
-      <method v="2" />
+      <method v="2">
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="web-app:war" />
+        </option>
+        <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_copia del war" />
+      </method>
     </configuration>
+    <list>
+      <item itemvalue="Docker.web-app" />
+      <item itemvalue="Maven.fraud-detector [clean,package]" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -109,10 +152,25 @@
       <workItem from="1705326715831" duration="252000" />
       <workItem from="1705329176105" duration="6152000" />
       <workItem from="1705336481484" duration="16000" />
+      <workItem from="1705503188597" duration="11813000" />
+      <workItem from="1705530745754" duration="4906000" />
+      <workItem from="1705567771764" duration="55398000" />
+      <workItem from="1705738676858" duration="5717000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
