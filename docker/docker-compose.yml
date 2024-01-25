@@ -15,17 +15,6 @@ services:
       - "3307:3307"
       - "33061:33061"
 
-#  phpmyadmin:
-#    image: phpmyadmin/phpmyadmin
-#    container_name: phpmyadmin
-#    depends_on:
-#      - db
-#    ports:
-#      - "8001:80"
-#    environment:
-#      - PMA_HOST=db
-#      - PMA_PORT=3306
-
   web:
     container_name: web
     depends_on:
@@ -40,6 +29,8 @@ services:
   zookeeper:
     image: wurstmeister/zookeeper:latest
     container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
     ports:
       - "2181:2181"
 
@@ -62,6 +53,7 @@ services:
       KAFKA_NUM_PARTITIONS: 3
       KAFKA_DEFAULT_REPLICATION_FACTOR: 2
       KAFKA_CREATE_TOPICS: "cars-data,violations,frauds"
+      JMX_PORT: 9999 
     depends_on:
       - zookeeper
       
@@ -71,11 +63,11 @@ services:
     ports:
       - "9094:9094"
     expose:
-      - "9093"
+      - "9095"
     environment:
       KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka-broker-2:9095,OUTSIDE://localhost:9094
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
-      KAFKA_LISTENERS: INSIDE://0.0.0.0:9093,OUTSIDE://0.0.0.0:9094
+      KAFKA_LISTENERS: INSIDE://0.0.0.0:9095,OUTSIDE://0.0.0.0:9094
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
@@ -84,29 +76,50 @@ services:
       KAFKA_NUM_PARTITIONS: 3
       KAFKA_DEFAULT_REPLICATION_FACTOR: 2
       KAFKA_CREATE_TOPICS: "cars-data,violations,frauds"
+      JMX_PORT: 9999 
+    depends_on:
+      - zookeeper
+      
+  kafka-manager:
+    image: sheepkiller/kafka-manager
+    container_name: kafka-manager
+    ports:
+      - "9000:9000"
+    environment:
+      ZK_HOSTS: "zookeeper:2181"
+      APPLICATION_SECRET: "letmein"
     depends_on:
       - zookeeper
 
-  jobmanager:
-    image: apache/flink:1.18-java17
-    container_name: flink-jobmanager
-    command:
-      - jobmanager
-      - flink run -d -c "it.unipi.dsmt.Main" job/fraud-detector-1.0-jar-with-dependencies.jar
-    ports:
-      - "8081:8081"  # Flink Web UI port
-    environment:
-      - JOB_MANAGER_RPC_ADDRESS=jobmanager
-    volumes:
-      - ./target/fraud-detector-1.0-jar-with-dependencies.jar:/opt/flink/job/fraud-detector-1.0-jar-with-dependencies.jar
+#  jobmanager:
+#    image: apache/flink:1.18-java17
+#    container_name: flink-jobmanager
+#    command:
+#      - jobmanager
+#      - flink run -d -c "it.unipi.dsmt.Main" job/fraud-detector-1.0-jar-with-dependencies.jar
+#    ports:
+#      - "8081:8081"  # Flink Web UI port
+#    environment:
+#      - JOB_MANAGER_RPC_ADDRESS=jobmanager
+#    volumes:
+#      - ./target/fraud-detector-1.0-jar-with-dependencies.jar:/opt/flink/job/fraud-detector-1.0-jar-with-dependencies.jar
 
+#  taskmanager:
+#    image: apache/flink:1.18.0-java17
+#    container_name: flink-taskmanager
+#    command: taskmanager
+#    depends_on:
+#      - jobmanager
+#    environment:
+#      - JOB_MANAGER_RPC_ADDRESS=jobmanager
 
-  taskmanager:
-    image: apache/flink:1.18.0-java17
-    container_name: flink-taskmanager
-    command: taskmanager
-    depends_on:
-      - jobmanager
-    environment:
-      - JOB_MANAGER_RPC_ADDRESS=jobmanager
-
+#  phpmyadmin:
+#    image: phpmyadmin/phpmyadmin
+#    container_name: phpmyadmin
+#    depends_on:
+#      - db
+#    ports:
+#      - "8001:80"
+#    environment:
+#      - PMA_HOST=db
+#      - PMA_PORT=3307

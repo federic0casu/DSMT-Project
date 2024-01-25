@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 @AllArgsConstructor
 class CarTask implements Runnable {
@@ -30,7 +31,7 @@ class CarTask implements Runnable {
 
     @Override
     public void run() {
-        Random random = new Random();
+        ThreadLocalRandom random = ThreadLocalRandom.current();
 
         try {
             Thread.sleep(random.nextInt(10) * 1000);
@@ -72,9 +73,10 @@ class CarTask implements Runnable {
                                         p.getLatitude().doubleValue(),
                                         p.getLongitude().doubleValue());
                         double timeMillis = (distance / Params.AVG_SPEED) * 60 * 60 * 1000; // time in milliseconds
-                        double min = timeMillis - (timeMillis * 0.25);
-                        double max = timeMillis + (timeMillis * 0.25);
-                        long waitingTime = (long) (Math.abs(random.nextDouble() * (max - min) + min));
+                        double v = timeMillis > 1 ? (timeMillis * 0.1) : (timeMillis * 0.25);
+                        double min = timeMillis - v;
+                        double max = timeMillis + v;
+                        long waitingTime = (long) (Math.abs(random.nextGaussian()) * (max - min) + min);
 
                         // Calculate current speed, avoiding division by zero
                         double currentSpeed = (waitingTime != 0) ?

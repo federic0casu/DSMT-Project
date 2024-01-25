@@ -44,7 +44,7 @@ public class FraudEventEndpoint implements EventEndpoint {
         }
 
         // Instantiating a new KafkaConsumer
-        KafkaConsumer<String, String> consumer = KafkaUtils.createKafkaConsumer(Params.TOPIC_CARS, Params.FRAUDS_GROUP);
+        KafkaConsumer<String, String> consumer = KafkaUtils.createKafkaConsumer(Params.TOPIC_FRAUDS, Params.FRAUDS_GROUP);
         activeKafkaConsumers += 1;
         AtomicBoolean flag = new AtomicBoolean(false);
         consumers.add(flag);
