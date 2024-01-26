@@ -25,6 +25,10 @@ services:
     ports:
       - "8080:8080"
     command: ['catalina.sh', 'run']
+    volumes:
+      - ./target/web-app.war:/usr/local/tomcat/webapps/web-app.war
+
+
 
   zookeeper:
     image: wurstmeister/zookeeper:latest
@@ -53,7 +57,7 @@ services:
       KAFKA_NUM_PARTITIONS: 3
       KAFKA_DEFAULT_REPLICATION_FACTOR: 2
       KAFKA_CREATE_TOPICS: "cars-data,violations,frauds"
-      JMX_PORT: 9999 
+
     depends_on:
       - zookeeper
       
@@ -76,7 +80,6 @@ services:
       KAFKA_NUM_PARTITIONS: 3
       KAFKA_DEFAULT_REPLICATION_FACTOR: 2
       KAFKA_CREATE_TOPICS: "cars-data,violations,frauds"
-      JMX_PORT: 9999 
     depends_on:
       - zookeeper
       
@@ -91,35 +94,35 @@ services:
     depends_on:
       - zookeeper
 
-#  jobmanager:
-#    image: apache/flink:1.18-java17
-#    container_name: flink-jobmanager
-#    command:
-#      - jobmanager
-#      - flink run -d -c "it.unipi.dsmt.Main" job/fraud-detector-1.0-jar-with-dependencies.jar
-#    ports:
-#      - "8081:8081"  # Flink Web UI port
-#    environment:
-#      - JOB_MANAGER_RPC_ADDRESS=jobmanager
-#    volumes:
-#      - ./target/fraud-detector-1.0-jar-with-dependencies.jar:/opt/flink/job/fraud-detector-1.0-jar-with-dependencies.jar
+  jobmanager:
+    image: apache/flink:1.18-java17
+    container_name: flink-jobmanager
+    command:
+      - jobmanager
+      - flink run -d -c "it.unipi.dsmt.Main" job/fraud-detector-1.0-jar-with-dependencies.jar
+    ports:
+      - "8081:8081"  # Flink Web UI port
+    environment:
+      - JOB_MANAGER_RPC_ADDRESS=jobmanager
+    volumes:
+      - ./target/fraud-detector-1.0-jar-with-dependencies.jar:/opt/flink/job/fraud-detector-1.0-jar-with-dependencies.jar
 
-#  taskmanager:
-#    image: apache/flink:1.18.0-java17
-#    container_name: flink-taskmanager
-#    command: taskmanager
-#    depends_on:
-#      - jobmanager
-#    environment:
-#      - JOB_MANAGER_RPC_ADDRESS=jobmanager
+  taskmanager:
+    image: apache/flink:1.18.0-java17
+    container_name: flink-taskmanager
+    command: taskmanager
+    depends_on:
+      - jobmanager
+    environment:
+      - JOB_MANAGER_RPC_ADDRESS=jobmanager
 
-#  phpmyadmin:
-#    image: phpmyadmin/phpmyadmin
-#    container_name: phpmyadmin
-#    depends_on:
-#      - db
-#    ports:
-#      - "8001:80"
-#    environment:
-#      - PMA_HOST=db
-#      - PMA_PORT=3307
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    depends_on:
+      - db
+    ports:
+      - "8001:80"
+    environment:
+      - PMA_HOST=db
+      - PMA_PORT=3307

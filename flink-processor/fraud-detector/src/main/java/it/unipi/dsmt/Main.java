@@ -30,8 +30,10 @@ public class Main {
 		// set up the streaming execution environment
 		try (StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment()) {
 
+
+
 			KafkaSource<Order> source = KafkaSource.<Order>builder()
-					.setBootstrapServers("kafka:9093")
+					.setBootstrapServers("kafka-broker-1:9093,kafka-broker-2:9095")
 					.setTopics("orders")
 					.setStartingOffsets(OffsetsInitializer.earliest())
 					.setValueOnlyDeserializer(new JsonDeserializationSchema<>(Order.class))
@@ -46,7 +48,7 @@ public class Main {
 
 			// sink code
 			KafkaSink<Fraud> sink = KafkaSink.<Fraud>builder()
-					.setBootstrapServers("kafka:9093")
+					.setBootstrapServers("kafka-broker-1:9093,kafka-broker-2:9095")
 					.setRecordSerializer(
 							KafkaRecordSerializationSchema.builder()
 									.setTopic("frauds")

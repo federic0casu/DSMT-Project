@@ -1,13 +1,18 @@
 package it.unipi.dsmt.Models;
 
+
+
+
 public class Fraud {
     private String customerId;
+    private Customer customer = new Customer();
     private FraudType fraudType;
 
 
 
-    public Fraud (String customerId, FraudType type) {
+    public Fraud (String customerId, Customer customer,FraudType type) {
         this.customerId = customerId;
+        this.customer = customer;
         this.fraudType = type;
     }
 

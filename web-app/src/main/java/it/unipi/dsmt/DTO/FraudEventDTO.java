@@ -1,13 +1,16 @@
 package it.unipi.dsmt.DTO;
 
 
+import it.unipi.dsmt.models.Customer;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
+@AllArgsConstructor
 public class FraudEventDTO {
     private String customerId;
+    private Customer customer;
     private FraudType fraudType;
 
 
@@ -18,8 +21,4 @@ public class FraudEventDTO {
         MULTIPLE_LOCATION
     }
 
-    public FraudEventDTO (String customerId, FraudType type) {
-        this.customerId = customerId;
-        this.fraudType = type;
-    }
 }
