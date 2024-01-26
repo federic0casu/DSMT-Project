@@ -30,7 +30,7 @@ public class DynamicKeyFunction extends BroadcastProcessFunction
 
         // ottengo le regole
         ReadOnlyBroadcastState<Integer, Rule> rulesState =
-                ctx.getBroadcastState(RULES_STATE_DESCRIPTOR);
+                ctx.getBroadcastState(Rule.Descriptors.rulesDescriptor);
 
         // itero sulle regole e mando in output un evento per ogni regola che ho stabilito
         for (Map.Entry<Integer,Rule> entry : rulesState.immutableEntries()) {
@@ -41,13 +41,15 @@ public class DynamicKeyFunction extends BroadcastProcessFunction
 
     @Override
     public void processBroadcastElement(Rule rule, Context ctx, Collector<Keyed<Order, String, Integer>> out) throws Exception {
-        BroadcastState<Integer, Rule> broadcastState = ctx.getBroadcastState(RULES_STATE_DESCRIPTOR);
+        BroadcastState<Integer, Rule> broadcastState =
+                ctx.getBroadcastState(Rule.Descriptors.rulesDescriptor);
         // quando mi sta arrivando una nuova regola la aggiungo al broadcast state
         broadcastState.put(rule.getRuleId(), rule);
         updateWidestWindowRule(rule, broadcastState);
     }
 
-    private void updateWidestWindowRule(Rule rule, BroadcastState<Integer, Rule> broadcastState) throws Exception {
+    public static void updateWidestWindowRule(Rule rule,
+                                  BroadcastState<Integer, Rule> broadcastState) throws Exception {
         Rule widestWindowRule = broadcastState.get(WIDEST_RULE_KEY);
 
         if (widestWindowRule == null) {

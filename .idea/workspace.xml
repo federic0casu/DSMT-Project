@@ -5,15 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c2ea0a5a-f272-4019-a4a9-4a7e9077c9c9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Functions/DynamicUpdates/DynamicFraudProcessFunction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Functions/DynamicUpdates/DynamicKeyFunction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Functions/DynamicUpdates/RuleHelper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Functions/DynamicUpdates/SimpleAccumulator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Models/Rule.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Utils/StateUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Utils/Accumulators/BigDecimalCounter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Utils/FieldsExtractor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Models/Keyed.java" beforeDir="false" afterPath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Models/Keyed.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Functions/DynamicUpdates/DynamicFraudProcessFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Functions/DynamicUpdates/DynamicFraudProcessFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Functions/DynamicUpdates/DynamicKeyFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Functions/DynamicUpdates/DynamicKeyFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Functions/DynamicUpdates/RuleHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Utils/RuleHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Functions/DynamicUpdates/SimpleAccumulator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Models/Rule.java" beforeDir="false" afterPath="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Models/Rule.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,6 +70,7 @@
       <recent name="$PROJECT_DIR$/web-app/src/main/java/it/unipi/dsmt/javaee/webapp/models" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/flink-processor/fraud-detector/src/main/java/it/unipi/dsmt/Functions/DynamicUpdates/Accumulators" />
       <recent name="$PROJECT_DIR$/upstream-producers" />
     </key>
   </component>
@@ -154,7 +154,7 @@
       <workItem from="1705567771764" duration="55398000" />
       <workItem from="1705738676858" duration="6873000" />
       <workItem from="1705958909079" duration="900000" />
-      <workItem from="1706016723456" duration="7030000" />
+      <workItem from="1706016723456" duration="13157000" />
     </task>
     <servers />
   </component>
