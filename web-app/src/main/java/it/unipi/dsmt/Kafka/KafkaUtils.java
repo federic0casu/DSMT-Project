@@ -43,7 +43,6 @@ public class KafkaUtils {
     }
     public static <T> void consumeKafkaMessages(
             KafkaConsumer<String,String> consumer,
-            AtomicBoolean interrupted,
             List<Session> sessions,
             Class<?> valueType) {
 
@@ -71,12 +70,7 @@ public class KafkaUtils {
                         logger.error("Error deserializing message {}: {}", record.value(), e.getMessage());
                     }
                 });
-
-                if (interrupted.get())
-                    throw new InterruptedException();
             }
-        } catch (InterruptedException e) {
-            logger.info("Shutting down...");
         } catch (WakeupException e) {
             logger.error("Error consuming Kafka message: " + e.getMessage());
         } finally {
