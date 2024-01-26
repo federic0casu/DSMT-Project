@@ -53,7 +53,7 @@ services:
       KAFKA_NUM_PARTITIONS: 3
       KAFKA_DEFAULT_REPLICATION_FACTOR: 2
       KAFKA_CREATE_TOPICS: "cars-data,violations,frauds"
-      JMX_PORT: 9999 
+#      JMX_PORT: 9999 
     depends_on:
       - zookeeper
       
@@ -76,7 +76,7 @@ services:
       KAFKA_NUM_PARTITIONS: 3
       KAFKA_DEFAULT_REPLICATION_FACTOR: 2
       KAFKA_CREATE_TOPICS: "cars-data,violations,frauds"
-      JMX_PORT: 9999 
+#      JMX_PORT: 9999 
     depends_on:
       - zookeeper
       

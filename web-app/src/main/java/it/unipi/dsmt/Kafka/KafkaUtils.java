@@ -8,6 +8,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.websocket.EncodeException;
 import jakarta.websocket.Session;
 
+import org.apache.kafka.clients.admin.AdminClient;
+import org.apache.kafka.clients.admin.AdminClientConfig;
+import org.apache.kafka.clients.admin.KafkaAdminClient;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -19,10 +22,10 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 import java.time.Duration;
+
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Properties;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class KafkaUtils {
     private static final Logger logger = LoggerFactory.getLogger(KafkaUtils.class);
@@ -41,26 +44,33 @@ public class KafkaUtils {
 
         return consumer;
     }
+    public static AdminClient createKafkaAdmin() {
+        Properties props = new Properties();
+        props.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, Params.KAFKA_ENDPOINTS);
+
+        return AdminClient.create(props);
+    }
     public static <T> void consumeKafkaMessages(
             KafkaConsumer<String,String> consumer,
             List<Session> sessions,
             Class<?> valueType) {
 
-        try {
+        try (consumer) {
             ObjectMapper mapper = new ObjectMapper();
-            while (true) {
+            while (!Thread.currentThread().isInterrupted()) {
                 ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(Params.POLL_DURATION));
                 // Process the received records
                 records.forEach(record -> {
-                    // Logging (DEBUG)
+                    // DEBUG
                     logger.info("Received Kafka Message - Topic: {}, Partition: {}, Value: {}",
                             record.topic(), record.partition(), record.value());
+                    // DEBUG
 
                     // This block ensures that the creation of the tmp is performed atomically w.r.t. other operations
                     // sessions, that is it creates a consistent snapshot of sessions at that point in time.
-                    CopyOnWriteArrayList<Session> tmp;
+                    ArrayList<Session> tmp;
                     synchronized (sessions) {
-                        tmp = new CopyOnWriteArrayList<>(sessions);
+                        tmp = new ArrayList<>(sessions);
                     }
 
                     // Parse JSON using ObjectMapper and sending it through WebSocket
@@ -73,8 +83,6 @@ public class KafkaUtils {
             }
         } catch (WakeupException e) {
             logger.error("Error consuming Kafka message: " + e.getMessage());
-        } finally {
-            consumer.close(Duration.ofSeconds(30));
         }
     }
     public static <T> void broadcast(T event, List<Session> sessions) {
