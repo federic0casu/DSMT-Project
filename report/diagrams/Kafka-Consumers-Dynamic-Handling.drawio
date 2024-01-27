@@ -1,0 +1,212 @@
+<mxfile host="app.diagrams.net" modified="2024-01-27T11:59:05.851Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 OPR/106.0.0.0" etag="ovXgTDJwgKsD2j5JoNO9" version="23.0.2" type="device">
+  <diagram name="Page-1" id="JgfenV8bImL-zrSdhLo3">
+    <mxGraphModel dx="2509" dy="1376" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bac8d3;strokeColor=#23445d;" vertex="1" parent="1">
+          <mxGeometry x="600" y="795" width="200" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-2" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="600" y="375" width="200" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-3" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry y="385" width="450" height="560" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-4" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;kafka cluster&lt;/font&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="167.5" y="385" width="115" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-5" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="50" y="455" width="360" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-6" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="50" y="715" width="350" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-7" value="&lt;b&gt;kafka- broker-1 10.2.1.118&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="152.5" y="457" width="145" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-8" value="&lt;b&gt;kafka- broker-2&lt;br&gt;10.2.1.119&lt;br&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="152.5" y="717" width="145" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-9" value="&lt;b&gt;&quot;cars-data&quot; / Partition 1 / Replica 1&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#FF0000;" vertex="1" parent="1">
+          <mxGeometry x="70" y="495" width="320" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-10" value="&lt;b&gt;&quot;cars-data&quot; / Partition 2 / Replica 2&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="70" y="555" width="320" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-11" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;startArrow=classic;startFill=1;endArrow=none;endFill=0;curved=0;" edge="1" parent="1" source="Rp0nMzgmkCo1Nmanawax-12" target="Rp0nMzgmkCo1Nmanawax-19">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="580" y="780" />
+              <mxPoint x="580" y="528" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-12" value="&lt;b&gt;&quot;cars-data&quot; / Partition 2 / Replica 1&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#FF0000;" vertex="1" parent="1">
+          <mxGeometry x="65" y="755" width="320" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-13" value="&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(251, 251, 251); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;&lt;b&gt;&quot;cars-data&quot; / Partition 1 / Replica 2&lt;/b&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="65" y="815" width="320" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-17" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;curved=0;" edge="1" parent="1" source="Rp0nMzgmkCo1Nmanawax-18" target="Rp0nMzgmkCo1Nmanawax-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-18" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Consumer 1&lt;/font&gt;&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" vertex="1" parent="1">
+          <mxGeometry x="640" y="418" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-19" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;Consumer 2&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" vertex="1" parent="1">
+          <mxGeometry x="640" y="498" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-20" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;curved=0;" edge="1" parent="1" source="Rp0nMzgmkCo1Nmanawax-21" target="Rp0nMzgmkCo1Nmanawax-12">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="640" y="945" />
+              <mxPoint x="580" y="945" />
+              <mxPoint x="580" y="780" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-21" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;Consumer 2&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#647687;fontColor=#ffffff;strokeColor=#314354;" vertex="1" parent="1">
+          <mxGeometry x="640" y="917" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-22" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;curved=0;" edge="1" parent="1" source="Rp0nMzgmkCo1Nmanawax-23" target="Rp0nMzgmkCo1Nmanawax-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-23" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Consumer 1&lt;/font&gt;&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#647687;fontColor=#ffffff;strokeColor=#314354;" vertex="1" parent="1">
+          <mxGeometry x="640" y="837" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-24" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Group A&lt;/font&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="640" y="376" width="115" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-25" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Group B&lt;/font&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="640" y="797" width="115" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-26" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bac8d3;strokeColor=#23445d;" vertex="1" parent="1">
+          <mxGeometry x="1580" y="820" width="200" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-27" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1582.5" y="245" width="200" height="285" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-28" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="950" y="250" width="440" height="850" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-29" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;kafka cluster&lt;/font&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1107.5" y="250" width="115" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-30" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="990" y="320" width="360" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-31" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="580" width="350" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-32" value="&lt;b&gt;kafka- broker-1&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1092.5" y="322" width="145" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-33" value="&lt;b&gt;kafka- broker-2&lt;br&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1102.5" y="582" width="145" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-34" value="&lt;b&gt;&quot;cars-data&quot; / Partition 1 / Replica 1&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#FF0000;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="360" width="320" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-35" value="&lt;b&gt;&quot;cars-data&quot; / Partition 2 / Replica 2&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="420" width="320" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-36" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;startArrow=classic;startFill=1;endArrow=none;endFill=0;curved=0;" edge="1" parent="1" source="Rp0nMzgmkCo1Nmanawax-37" target="Rp0nMzgmkCo1Nmanawax-41">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1520" y="645" />
+              <mxPoint x="1520" y="393" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-37" value="&lt;b&gt;&quot;cars-data&quot; / Partition 2 / Replica 1&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#FF0000;" vertex="1" parent="1">
+          <mxGeometry x="1015" y="620" width="320" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-38" value="&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(251, 251, 251); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;&lt;b&gt;&quot;cars-data&quot; / Partition 1 / Replica 2&lt;/b&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1015" y="680" width="320" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-39" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;curved=0;" edge="1" parent="1" source="Rp0nMzgmkCo1Nmanawax-40" target="Rp0nMzgmkCo1Nmanawax-34">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-40" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Consumer 1&lt;/font&gt;&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" vertex="1" parent="1">
+          <mxGeometry x="1622.5" y="288" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-41" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;Consumer 2&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" vertex="1" parent="1">
+          <mxGeometry x="1622.5" y="368" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-42" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;curved=0;" edge="1" parent="1" source="Rp0nMzgmkCo1Nmanawax-43" target="Rp0nMzgmkCo1Nmanawax-37">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1520" y="967" />
+              <mxPoint x="1520" y="645" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-43" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;Consumer 2&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#647687;fontColor=#ffffff;strokeColor=#314354;" vertex="1" parent="1">
+          <mxGeometry x="1620" y="942" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-44" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;curved=0;" edge="1" parent="1" source="Rp0nMzgmkCo1Nmanawax-45" target="Rp0nMzgmkCo1Nmanawax-34">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-45" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Consumer 1&lt;/font&gt;&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#647687;fontColor=#ffffff;strokeColor=#314354;" vertex="1" parent="1">
+          <mxGeometry x="1620" y="862" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-46" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Group A&lt;/font&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1622.5" y="246" width="115" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-47" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Group B&lt;/font&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1620" y="822" width="115" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-52" value="&lt;b&gt;&quot;cars-data&quot; / Partition 3 / Replica 2&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="480" width="320" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-53" value="&lt;b&gt;&quot;cars-data&quot; / Partition 3 / Replica 3&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1015" y="740" width="320" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-54" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="840" width="350" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-55" value="&lt;b&gt;kafka- broker-3&lt;br&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1102.5" y="842" width="145" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-56" value="&lt;b&gt;&quot;cars-data&quot; / Partition 3 / Replica 1&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#FF0000;" vertex="1" parent="1">
+          <mxGeometry x="1015" y="880" width="320" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-57" value="&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(251, 251, 251); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;&lt;b&gt;&quot;cars-data&quot; / Partition 1 / Replica 3&lt;/b&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1015" y="940" width="320" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-58" value="&lt;b&gt;&quot;cars-data&quot; / Partition 2 / Replica 3&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1015" y="1000" width="320" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-60" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;curved=0;" edge="1" parent="1" source="Rp0nMzgmkCo1Nmanawax-59" target="Rp0nMzgmkCo1Nmanawax-56">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1440" y="1050" />
+              <mxPoint x="1440" y="905" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-59" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;Consumer 3&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;gradientColor=#97d077;" vertex="1" parent="1">
+          <mxGeometry x="1620" y="1020" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-62" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;curved=0;" edge="1" parent="1" source="Rp0nMzgmkCo1Nmanawax-61" target="Rp0nMzgmkCo1Nmanawax-56">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1440" y="480" />
+              <mxPoint x="1440" y="905" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-61" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;Consumer 3&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;gradientColor=#97d077;" vertex="1" parent="1">
+          <mxGeometry x="1622.5" y="450" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-63" value="&lt;font style=&quot;font-size: 25px;&quot;&gt;&lt;b&gt;From 2 Partitions and 2 Consumers per Group ...&lt;/b&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="80" y="170" width="620" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Rp0nMzgmkCo1Nmanawax-64" value="&lt;font style=&quot;font-size: 25px;&quot;&gt;&lt;b&gt;... To 3 Partitions and 3 Consumers per Group ...&lt;/b&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="920" y="170" width="620" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -9,7 +9,8 @@ public class Params {
     public static final String KEY_DESERIALIZER = "org.apache.kafka.common.serialization.StringDeserializer";
     public static final String VALUE_DESERIALIZER = "org.apache.kafka.common.serialization.StringDeserializer";
     public static final String AUTO_OFFSET_RESET = "latest";
-    public static final int THREADS = 2;
+    public static final int THREADS = 32;
     public static final int PARTITIONS_PER_TOPIC = 2;
-    public static final int POLL_DURATION = 100;
+    public static final int POOL_DURATION = 100;
+    public static final long ADMIN_KAFKA_POOL_DURATION = 10000;
 }

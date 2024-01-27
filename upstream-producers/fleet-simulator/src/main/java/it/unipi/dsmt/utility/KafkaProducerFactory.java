@@ -19,9 +19,6 @@ public class KafkaProducerFactory {
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, Params.KEY_SERIALIZER_CLASS);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, Params.VALUE_SERIALIZER_CLASS);
 
-        // Custom partitioner
-        props.put(ProducerConfig.PARTITIONER_CLASS_CONFIG, Params.CUSTOM_PARTITIONER);
-
         KafkaProducer<String, String> producer = new KafkaProducer<>(props);
 
         // DEBUG

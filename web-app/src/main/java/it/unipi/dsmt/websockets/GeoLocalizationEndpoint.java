@@ -11,20 +11,14 @@ import jakarta.websocket.OnClose;
 import jakarta.websocket.Session;
 import jakarta.websocket.server.ServerEndpoint;
 
-import org.apache.kafka.clients.admin.AdminClient;
-import org.apache.kafka.clients.admin.DescribeTopicsOptions;
-import org.apache.kafka.clients.admin.DescribeTopicsResult;
-import org.apache.kafka.clients.admin.TopicDescription;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.common.KafkaFuture;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -37,7 +31,7 @@ public class GeoLocalizationEndpoint implements EventEndpoint {
     private static final List<Session> sessions = Collections.synchronizedList(new ArrayList<>());
 
     // Executor service for managing Kafka consumer tasks
-    private static final ExecutorService executorService = Executors.newFixedThreadPool(Params.THREADS + 1);
+    private static final ExecutorService executorService = Executors.newFixedThreadPool(Params.THREADS);
 
     // List to store futures of Kafka consumer tasks
     private static final List<Future<?>> consumerFutures = new ArrayList<>();
@@ -45,75 +39,13 @@ public class GeoLocalizationEndpoint implements EventEndpoint {
     private static int currentActivePartitions = Params.PARTITIONS_PER_TOPIC;
 
     static {
-        for (int i = 0; i < currentActivePartitions; i++) {
-            // Create a new Kafka consumer
-            KafkaConsumer<String, String> consumer =
-                    KafkaUtils.createKafkaConsumer(Params.TOPIC_CARS, Params.CARS_DATA_GROUP);
-
-            // Create a new task to consume Kafka messages
-            Runnable kafkaTask = () -> {
-                KafkaUtils.consumeKafkaMessages(consumer, sessions, GeoLocalizationDTO.class);
-            };
-
-            // Submit the Kafka task to the executor service and store the future
-            Future<?> future = executorService.submit(kafkaTask);
-            consumerFutures.add(future);
-        }
+        startConsumers(currentActivePartitions);
 
         // Create a new task to dynamically handle KafkaConsumers
-        Runnable handleKafkaConsumer = () -> {
-            while(true) {
-                int numPartitions = 0;
-
-                try (AdminClient adminClient = KafkaUtils.createKafkaAdmin()) {
-                    DescribeTopicsResult describeTopicsResult = adminClient.describeTopics(
-                            Collections.singleton(Params.TOPIC_CARS),
-                            new DescribeTopicsOptions().timeoutMs(5000)); // Timeout set to 5 seconds
-
-                    Map<String, KafkaFuture<TopicDescription>> values = describeTopicsResult.values();
-                    KafkaFuture<TopicDescription> topicDescription = values.get(Params.TOPIC_CARS);
-
-                    numPartitions = topicDescription.get().partitions().size();
-
-                    // DEBUG
-                    logger.info("KafkaAdmin >> number of active partitions for {}: {}", Params.TOPIC_CARS, numPartitions);
-                    // DEBUG
-                } catch (InterruptedException | ExecutionException e) {
-                    continue;
-                }
-
-                if  (numPartitions > currentActivePartitions) {
-                    int difference = numPartitions - currentActivePartitions;
-                    currentActivePartitions = numPartitions;
-
-                    for (var i = 0; i < difference; i++) {
-                        // Create a new Kafka consumer
-                        KafkaConsumer<String, String> consumer =
-                                KafkaUtils.createKafkaConsumer(Params.TOPIC_CARS, Params.CARS_DATA_GROUP);
-
-                        // Create a new task to consume Kafka messages
-                        Runnable kafkaTask = () -> {
-                            KafkaUtils.consumeKafkaMessages(consumer, sessions, GeoLocalizationDTO.class);
-                        };
-
-                        // Submit the Kafka task to the executor service and store the future
-                        Future<?> future = executorService.submit(kafkaTask);
-                        consumerFutures.add(future);
-                    }
-                } else {
-                    int difference = currentActivePartitions - numPartitions;
-                    currentActivePartitions = numPartitions;
-
-                    for (var i = 0; i < difference; i++) {
-                        Future<?> toStop = consumerFutures.removeFirst();
-                        toStop.cancel(true);
-                    }
-                }
-            }
-        };
+        Runnable handleKafkaConsumers = GeoLocalizationEndpoint::handleConsumers;
 
         // Submit the Kafka task to the executor service and store the future
-        Future<?> future = executorService.submit(handleKafkaConsumer);
+        Future<?> future = executorService.submit(handleKafkaConsumers);
     }
     @OnOpen
     public void onOpen(Session session) {
@@ -150,7 +82,23 @@ public class GeoLocalizationEndpoint implements EventEndpoint {
                 GeoLocalizationDTO.Type.HEADQUARTER);
         KafkaUtils.send(session, headquarters);
     }
-    private void restartConsumers() {
+    private static void startConsumers(int numberOfConsumers) {
+        for (var i = 0; i < numberOfConsumers; i++) {
+            // Create a new Kafka consumer
+            KafkaConsumer<String, String> consumer =
+                    KafkaUtils.createKafkaConsumer(Params.TOPIC_CARS, Params.CARS_DATA_GROUP);
+
+            // Create a new task to consume Kafka messages
+            Runnable kafkaTask = () -> {
+                KafkaUtils.consumeKafkaMessages(consumer, sessions, GeoLocalizationDTO.class);
+            };
+
+            // Submit the Kafka task to the executor service and store the future
+            Future<?> future = executorService.submit(kafkaTask);
+            consumerFutures.add(future);
+        }
+    }
+    private static void restartConsumers() {
         // Iterate through the consumer futures list
         synchronized (consumerFutures) {
             for (Future<?> future : consumerFutures) {
@@ -171,6 +119,52 @@ public class GeoLocalizationEndpoint implements EventEndpoint {
                     Future<?> newFuture = executorService.submit(kafkaTask);
                     consumerFutures.add(newFuture);
                 }
+            }
+        }
+    }
+    private static void handleConsumers() {
+        while(true) {
+            int numPartitions = KafkaUtils.getActivePartitions(Params.TOPIC_CARS, currentActivePartitions);
+
+            try {
+                Thread.sleep(Params.ADMIN_KAFKA_POOL_DURATION);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            if (numPartitions > Params.THREADS) {
+                // DEBUG
+                logger.info("Too many partitions ({})! No new KafkaConsumer will be added to topic \"{}\")",
+                        numPartitions,
+                        Params.TOPIC_CARS);
+                // DEBUG
+                continue;
+            }
+
+            if  (numPartitions > currentActivePartitions) {
+                startConsumers(numPartitions - currentActivePartitions);
+
+                // DEBUG
+                logger.info("Added {} KafkaConsumer to topic \"{}\"",
+                        numPartitions - currentActivePartitions,
+                        Params.TOPIC_CARS);
+                // DEBUG
+
+                currentActivePartitions = numPartitions;
+
+            } else if (numPartitions < currentActivePartitions) {
+                int difference = currentActivePartitions - numPartitions;
+
+                for (var i = 0; i < difference; i++) {
+                    Future<?> toStop = consumerFutures.removeFirst();
+                    toStop.cancel(true);
+                }
+
+                currentActivePartitions = numPartitions;
+            } else {
+                // DEBUG
+                logger.info("Nothing has changed for topic \"{}\"", Params.TOPIC_CARS);
+                // DEBUG
             }
         }
     }

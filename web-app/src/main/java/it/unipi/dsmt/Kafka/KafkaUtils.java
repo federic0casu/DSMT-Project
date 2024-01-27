@@ -8,12 +8,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.websocket.EncodeException;
 import jakarta.websocket.Session;
 
-import org.apache.kafka.clients.admin.AdminClient;
-import org.apache.kafka.clients.admin.AdminClientConfig;
-import org.apache.kafka.clients.admin.KafkaAdminClient;
+import org.apache.kafka.clients.admin.*;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.common.KafkaFuture;
 import org.apache.kafka.common.errors.WakeupException;
 
 import org.slf4j.Logger;
@@ -23,9 +22,8 @@ import java.io.IOException;
 
 import java.time.Duration;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Properties;
+import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 public class KafkaUtils {
     private static final Logger logger = LoggerFactory.getLogger(KafkaUtils.class);
@@ -44,7 +42,7 @@ public class KafkaUtils {
 
         return consumer;
     }
-    public static AdminClient createKafkaAdmin() {
+    private static AdminClient createKafkaAdmin() {
         Properties props = new Properties();
         props.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, Params.KAFKA_ENDPOINTS);
 
@@ -58,7 +56,7 @@ public class KafkaUtils {
         try (consumer) {
             ObjectMapper mapper = new ObjectMapper();
             while (!Thread.currentThread().isInterrupted()) {
-                ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(Params.POLL_DURATION));
+                ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(Params.POOL_DURATION));
                 // Process the received records
                 records.forEach(record -> {
                     // DEBUG
@@ -84,6 +82,29 @@ public class KafkaUtils {
         } catch (WakeupException e) {
             logger.error("Error consuming Kafka message: " + e.getMessage());
         }
+    }
+    public static int getActivePartitions(String topic, int currentActivePartitions) {
+        int numPartitions = currentActivePartitions;
+        try (AdminClient adminClient = KafkaUtils.createKafkaAdmin()) {
+            DescribeTopicsResult describeTopicsResult = adminClient.describeTopics(
+                    Collections.singleton(topic),
+                    new DescribeTopicsOptions().timeoutMs(5000)); // Timeout set to 5 seconds
+
+            Map<String, KafkaFuture<TopicDescription>> values = describeTopicsResult.values();
+            KafkaFuture<TopicDescription> topicDescription = values.get(topic);
+
+            numPartitions = topicDescription.get().partitions().size();
+
+            // DEBUG
+            logger.info("[KafkaAdmin] Number of active partitions for {}: {}", topic, numPartitions);
+            // DEBUG
+        } catch (InterruptedException | ExecutionException e) {
+            logger.error("[KafkaAdmin] Error while fetching number of active partitions for {}: {}",
+                    topic,
+                    e.getMessage());
+        }
+
+        return numPartitions;
     }
     public static <T> void broadcast(T event, List<Session> sessions) {
         sessions.forEach(session -> {

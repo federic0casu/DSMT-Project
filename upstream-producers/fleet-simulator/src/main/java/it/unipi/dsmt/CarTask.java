@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 @AllArgsConstructor
@@ -34,7 +33,9 @@ class CarTask implements Runnable {
         ThreadLocalRandom random = ThreadLocalRandom.current();
 
         try {
-            Thread.sleep(random.nextInt(10) * 1000);
+            var waitingTime = random.nextInt(60) ;
+            logger.info("Car {}: starting in {} s...", car.getVin(), waitingTime);
+            Thread.sleep(waitingTime * 1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -128,7 +129,12 @@ class CarTask implements Runnable {
             ProducerRecord<String, String> record = new ProducerRecord<>(
                     Params.TOPIC,
                     new ObjectMapper().writeValueAsString(event));
-            producer.send(record);
+
+            producer.send(record, (metadata, exception) -> {
+                if (exception == null)
+                    logger.info("Car {} >> Message sent to partition {}", car.getVin(), metadata.partition());
+            });
+
             producer.flush();
         } catch (Exception e) {
             Thread.currentThread().interrupt();
