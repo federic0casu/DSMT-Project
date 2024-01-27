@@ -11,7 +11,7 @@ public class RateWindowFunction extends ProcessWindowFunction<Order, Fraud,
         String,TimeWindow> {
     @Override
     public void process(String key, Context ctx, Iterable<Order> elements, Collector<Fraud> out) throws Exception {
-        out.collect(new Fraud(key, elements.iterator().next().getCustomer(),
+        out.collect(new Fraud(ctx.currentWatermark(),key, elements.iterator().next().getCustomer(),
                 Fraud.FraudType.SHORT_PERIOD));
     }
 }

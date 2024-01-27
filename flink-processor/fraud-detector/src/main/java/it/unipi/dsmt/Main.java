@@ -83,6 +83,8 @@ public class Main {
 					.keyBy(order -> order.getCustomer().getId())
 					.process(new MultipleLocationFunction());
 
+			largeOrdersStream.print();
+
 			highRateOrdersStream.sinkTo(sink);
 			largeOrdersStream.sinkTo(sink);
 			multipleLocationsOrderStream.sinkTo(sink);

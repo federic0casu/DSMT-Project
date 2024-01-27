@@ -6,16 +6,16 @@ import java.util.UUID;
 
 public class Customer {
     @JsonProperty("id")
-    private String id;
+    public String id;
 
     @JsonProperty("name")
-    private String name;
+    public String name;
 
     @JsonProperty("email")
-    private String email;
+    public String email;
 
     @JsonProperty("country")
-    private String country;
+    public String country;
 
     // Constructors (if needed)
 

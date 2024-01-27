@@ -43,7 +43,7 @@ public class MultipleLocationFunction
         if (!current.lastOrderLocation.equals(value.getCustomer().getCountry()) &&
             current.lastOrderTimestamp + Duration.ofSeconds(TIME_THRESHOLD).toMillis() > ctx.timestamp()) {
                 // output a new Fraud
-                out.collect(new Fraud(ctx.getCurrentKey(),value.getCustomer(),
+                out.collect(new Fraud(value.timestamp,ctx.getCurrentKey(),value.getCustomer(),
                         Fraud.FraudType.MULTIPLE_LOCATION));
         }
 
