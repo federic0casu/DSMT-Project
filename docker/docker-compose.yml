@@ -54,7 +54,7 @@ services:
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
       KAFKA_DELETE_TOPIC_ENABLE: "true"
       KAFKA_BROKER_ID: 1
-      KAFKA_NUM_PARTITIONS: 3
+      KAFKA_NUM_PARTITIONS: 2
       KAFKA_DEFAULT_REPLICATION_FACTOR: 2
       KAFKA_CREATE_TOPICS: "cars-data,violations,frauds"
 
@@ -77,22 +77,12 @@ services:
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
       KAFKA_DELETE_TOPIC_ENABLE: "true"
       KAFKA_BROKER_ID: 2
-      KAFKA_NUM_PARTITIONS: 3
+      KAFKA_NUM_PARTITIONS: 2
       KAFKA_DEFAULT_REPLICATION_FACTOR: 2
       KAFKA_CREATE_TOPICS: "cars-data,violations,frauds"
     depends_on:
       - zookeeper
       
-  kafka-manager:
-    image: sheepkiller/kafka-manager
-    container_name: kafka-manager
-    ports:
-      - "9000:9000"
-    environment:
-      ZK_HOSTS: "zookeeper:2181"
-      APPLICATION_SECRET: "letmein"
-    depends_on:
-      - zookeeper
 
   jobmanager:
     image: apache/flink:1.18-java17
@@ -115,14 +105,3 @@ services:
       - jobmanager
     environment:
       - JOB_MANAGER_RPC_ADDRESS=jobmanager
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
-    depends_on:
-      - db
-    ports:
-      - "8001:80"
-    environment:
-      - PMA_HOST=db
-      - PMA_PORT=3307

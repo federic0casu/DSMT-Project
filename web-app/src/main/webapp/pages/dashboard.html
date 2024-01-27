@@ -1,27 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Dashboard</title>
-        <link rel="stylesheet" href="../css/style.css">
-    </head>
-    <body>
-        <h1>Real time Event Dashboard</h1>
-        <table id="eventTable">
-            <thead>
-                <tr>
-                    <th>Timestamp</th>
-                    <th>Customer ID</th>
-                    <th>Fraud Type</th>
-                    <th>Customer Name</th>
-                    <th>Customer Email</th>
-                    <th>Customer Country</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-        <script src="../js/frauds.js"></script>
-    </body>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+<h1>Real time Event Dashboard</h1>
+<table id="eventTable">
+    <thead>
+    <tr>
+        <th>Timestamp</th>
+        <th>Customer ID</th>
+        <th>Fraud Type</th>
+        <th>Customer Name</th>
+        <th>Customer Email</th>
+        <th>Customer Country</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Table body for the first table -->
+    </tbody>
+</table>
+
+<!-- Additional table for Car attributes -->
+<h2>Car Attributes</h2>
+<table id="carTable">
+    <thead>
+    <tr>
+        <th>VIN</th>
+        <th>Manufacturer</th>
+        <th>Model</th>
+        <th>Fuel Type</th>
+        <th>Color</th>
+        <th>Consumption</th>
+        <th>Distance</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Table body for the second table (Car attributes) -->
+    </tbody>
+</table>
+
+<!-- Include the trips.js script -->
+<script src="../js/trips.js"></script>
+
+<!-- Include the frauds.js script -->
+<script src="../js/frauds.js"></script>
+</body>
+
 </html>
