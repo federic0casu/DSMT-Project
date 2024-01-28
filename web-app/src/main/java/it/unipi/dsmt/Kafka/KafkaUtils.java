@@ -30,7 +30,7 @@ public class KafkaUtils {
         Properties props = new Properties();
 
         props.put(ConsumerConfig.GROUP_ID_CONFIG, group);
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, Params.KAFKA_ENDPOINTS);
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, Params.KAFKA_REMOTE_ENDPOINTS);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, Params.KEY_DESERIALIZER);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, Params.VALUE_DESERIALIZER);
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, Params.AUTO_OFFSET_RESET);

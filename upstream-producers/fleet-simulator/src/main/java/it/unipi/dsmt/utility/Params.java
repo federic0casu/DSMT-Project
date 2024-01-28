@@ -3,6 +3,7 @@ package it.unipi.dsmt.utility;
 public class Params {
     public static final String TOPIC = "cars-data";
     public static final String SERVERS = "localhost:9092,localhost:9094";
+    public static final String REMOTE_KAKFA_SERVERS = "10.2.1.118:9092,10.2.1.119:9092";
     public static final String KEY_SERIALIZER_CLASS = "org.apache.kafka.common.serialization.StringSerializer";
     public static final String VALUE_SERIALIZER_CLASS = "org.apache.kafka.common.serialization.StringSerializer";
     public static final String CUSTOM_PARTITIONER = "it.unipi.dsmt.utility.RoundRobinPartitioner";

@@ -5,9 +5,9 @@ import java.sql.SQLException;
 import java.sql.DriverManager;
 
 public class MySQLConnector {
-    private static final String URL = "jdbc:mysql://db:3306/fraud_detection_db";
-    private static final String USER = "fraud_detection_user";
-    private static final String PASSWORD = "";
+    private static final String URL = "jdbc:mysql://localhost:3306/fraud_detection_db";
+    private static final String USER = "daniel";
+    private static final String PASSWORD = "fraud";
 
     private final Connection connection;
 

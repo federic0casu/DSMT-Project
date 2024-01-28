@@ -11,6 +11,11 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
+
+
+CREATE USER 'daniel'@'localhost' IDENTIFIED BY 'fraud';
+
+
 -- Create the database
 CREATE DATABASE IF NOT EXISTS fraud_detection_db;
 
@@ -56,5 +61,10 @@ ALTER TABLE `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+GRANT ALL PRIVILEGES ON fraud_detection_db.* TO 'daniel'@'localhost';
+FLUSH PRIVILEGES;
+
+
 
 COMMIT;

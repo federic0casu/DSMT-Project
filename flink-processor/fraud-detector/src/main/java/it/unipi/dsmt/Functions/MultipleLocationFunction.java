@@ -34,9 +34,12 @@ public class MultipleLocationFunction
         // perform checks, we only update state values for the next time
         LocationState current = state.value();
         if (current == null) {
+            // if is the first time in the keyed stream that we encounter an event, we
+            // initialize the state
             current = new LocationState();
             current.lastOrderLocation = value.getCustomer().getCountry();
             current.lastOrderTimestamp = ctx.timestamp();
+            state.update(current);
             return;
         }
 
