@@ -1,18 +1,17 @@
 package it.unipi.dsmt;
 
-import it.unipi.dsmt.models.Car;
-import it.unipi.dsmt.models.GeoLocalizationEvent;
+import io.jenetics.jpx.*;
 
-import io.jenetics.jpx.GPX;
-import io.jenetics.jpx.Track;
-import io.jenetics.jpx.TrackSegment;
+import it.unipi.dsmt.models.Car;
+import it.unipi.dsmt.utility.Params;
+import it.unipi.dsmt.models.GeoLocalizationEvent;
+import it.unipi.dsmt.utility.KafkaProducerFactory;
 
 import lombok.AllArgsConstructor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
 import org.slf4j.Logger;
@@ -20,25 +19,35 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Properties;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 @AllArgsConstructor
 class CarTask implements Runnable {
     public Car car;
     public Path gpxPath;
-    private static final String TOPIC = "cars-data";
-    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+    private static final Logger logger = LoggerFactory.getLogger(CarTask.class);
+    private static final KafkaProducerFactory factory = new KafkaProducerFactory();
 
     @Override
     public void run() {
-        Random random = new Random();
+        ThreadLocalRandom random = ThreadLocalRandom.current();
+
+        try {
+            var waitingTime = random.nextInt(60) ;
+            logger.info("Car {}: starting in {} s...", car.getVin(), waitingTime);
+            Thread.sleep(waitingTime * 1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         // Create Kafka producer
-        try (var producer = createKafkaProducer()) {
+        try (var producer = factory.createKafkaProducer()) {
             GPX gpxFile = GPX.read(gpxPath);
 
             if (gpxFile != null) {
+                // DEBUG
                 logger.info("Started trip {} for car {}", gpxPath.getFileName(), car.getVin());
+                // DEBUG
 
                 var points = gpxFile
                         .tracks()
@@ -48,37 +57,64 @@ class CarTask implements Runnable {
 
                 // START EVENT
                 var firstPoint = points.get(0);
-                var startEvent = new GeoLocalizationEvent(this.car, firstPoint.getLatitude(),
-                        firstPoint.getLongitude(), GeoLocalizationEvent.Type.START);
-                SendToKafka(producer, startEvent);
+                sendEvent(producer,
+                        this.car,
+                        firstPoint.getLatitude(),
+                        firstPoint.getLongitude(),
+                        GeoLocalizationEvent.Type.START);
 
                 // MOVING EVENTS
-                points.forEach(p -> {
-                    var carLog = new GeoLocalizationEvent(
-                            this.car,
-                            p.getLatitude(),
-                            p.getLongitude(),
-                            GeoLocalizationEvent.Type.MOVE);
+                boolean first = true;
+                var previous = points.get(0);
+                for (var p : points) {
+                    if (!first) {
+                        double distance =
+                                haversineDistance(previous.getLatitude().doubleValue(),
+                                        previous.getLongitude().doubleValue(),
+                                        p.getLatitude().doubleValue(),
+                                        p.getLongitude().doubleValue());
+                        double timeMillis = (distance / Params.AVG_SPEED) * 60 * 60 * 1000; // time in milliseconds
+                        double v = timeMillis > 1 ? (timeMillis * 0.1) : (timeMillis * 0.25);
+                        double min = timeMillis - v;
+                        double max = timeMillis + v;
+                        long waitingTime = (long) (Math.abs(random.nextGaussian()) * (max - min) + min);
 
-                    try {
-                        Thread.sleep(random.nextInt(1000));
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+                        // Calculate current speed, avoiding division by zero
+                        double currentSpeed = (waitingTime != 0) ?
+                                distance / (waitingTime / (60.0 * 60.0 * 1000.0)) : Double.POSITIVE_INFINITY;
 
-                    SendToKafka(producer, carLog);
-                });
+                        // DEBUG
+                        logger.info("Car {} >> current speed = {} [km/h], simulated time = {} [s]",
+                                car.getVin(),
+                                currentSpeed,
+                                waitingTime / 1000); // simulated time to cover distance in seconds
+                        // DEBUG
+
+                        try {
+                            Thread.sleep(waitingTime);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        sendEvent(producer,
+                                this.car,
+                                p.getLatitude(),
+                                p.getLongitude(),
+                                GeoLocalizationEvent.Type.MOVE);
+                    } else
+                        first = false;
+                }
 
                 // END EVENT
                 var lastPoint = points.get(points.size() - 1);
-                var endEvent = new GeoLocalizationEvent(
+                sendEvent(producer,
                         this.car,
                         lastPoint.getLatitude(),
                         lastPoint.getLongitude(),
                         GeoLocalizationEvent.Type.END);
-                SendToKafka(producer, endEvent);
 
+                // DEBUG
                 logger.info("Ended trip {} for car {}", gpxPath.getFileName(), car.getVin());
+                // DEBUG
             } else {
                 logger.error("No file found for {}", gpxPath);
             }
@@ -86,28 +122,41 @@ class CarTask implements Runnable {
             throw new RuntimeException(e);
         }
     }
-
-    private KafkaProducer<String, String> createKafkaProducer() {
-        Properties props = new Properties();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
-
-        return new KafkaProducer<>(props);
-    }
-
-    private void SendToKafka(KafkaProducer<String, String> producer, GeoLocalizationEvent geoLocalizationEvent) {
+    private void sendEvent(KafkaProducer<String, String> producer,
+                           Car car, Latitude lat, Longitude lon, GeoLocalizationEvent.Type type) {
+        GeoLocalizationEvent event = new GeoLocalizationEvent(car, lat, lon, type);
         try {
-            var objectMapper = new ObjectMapper();
-            String carJson = objectMapper.writeValueAsString(geoLocalizationEvent);
-            logger.info("Sending: {}", carJson);
+            ProducerRecord<String, String> record = new ProducerRecord<>(
+                    Params.TOPIC,
+                    new ObjectMapper().writeValueAsString(event));
 
-            ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC, carJson);
-            producer.send(record);
+            producer.send(record, (metadata, exception) -> {
+                if (exception == null)
+                    logger.info("Car {} >> Message sent to partition {}", car.getVin(), metadata.partition());
+            });
+
             producer.flush();
         } catch (Exception e) {
             Thread.currentThread().interrupt();
             logger.error(e.toString());
         }
+    }
+    private static double haversineDistance(double latA, double lonA, double latB, double lonB) {
+        // Convert latitude and longitude from degrees to radians
+        latA = Math.toRadians(latA);
+        lonA = Math.toRadians(lonA);
+        latB = Math.toRadians(latB);
+        lonB = Math.toRadians(lonB);
+
+        // Calculate differences
+        double dLat = latB - latA;
+        double dLon = lonB - lonA;
+
+        // Haversine formula
+        double a = Math.pow(Math.sin(dLat / 2), 2) + Math.cos(latA) * Math.cos(latB) * Math.pow(Math.sin(dLon / 2), 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        // Distance in kilometers
+        return Params.EARTH_RADIUS * c;
     }
 }
