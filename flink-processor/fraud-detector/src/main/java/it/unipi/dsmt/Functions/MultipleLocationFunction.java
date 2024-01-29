@@ -34,16 +34,20 @@ public class MultipleLocationFunction
         // perform checks, we only update state values for the next time
         LocationState current = state.value();
         if (current == null) {
+            // if is the first time in the keyed stream that we encounter an event, we
+            // initialize the state
             current = new LocationState();
             current.lastOrderLocation = value.getCustomer().getCountry();
             current.lastOrderTimestamp = ctx.timestamp();
+            state.update(current);
             return;
         }
 
         if (!current.lastOrderLocation.equals(value.getCustomer().getCountry()) &&
             current.lastOrderTimestamp + Duration.ofSeconds(TIME_THRESHOLD).toMillis() > ctx.timestamp()) {
                 // output a new Fraud
-                out.collect(new Fraud(ctx.getCurrentKey(), Fraud.FraudType.MULTIPLE_LOCATION));
+                out.collect(new Fraud(value.timestamp,ctx.getCurrentKey(),value.getCustomer(),
+                        Fraud.FraudType.MULTIPLE_LOCATION));
         }
 
         current.lastOrderLocation = value.getCustomer().getCountry();
