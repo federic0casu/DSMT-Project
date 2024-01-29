@@ -31,7 +31,6 @@ public class FraudEventEndpoint implements EventEndpoint {
 
     // List to store futures of Kafka consumer tasks
     private static final ArrayList<Future<?>> consumers = new ArrayList<>();
-
     private static int currentActivePartitions = Params.PARTITIONS_PER_TOPIC;
 
     static {

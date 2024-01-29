@@ -1,6 +1,5 @@
 package it.unipi.dsmt.Kafka;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import it.unipi.dsmt.utility.Params;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
