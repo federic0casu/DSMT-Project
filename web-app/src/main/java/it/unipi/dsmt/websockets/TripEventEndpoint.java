@@ -1,10 +1,10 @@
 package it.unipi.dsmt.websockets;
 
 
+import it.unipi.dsmt.DTO.FraudEventDTO;
 import it.unipi.dsmt.DTO.TripEventDTO;
-import it.unipi.dsmt.Kafka.KafkaUtils;
-import it.unipi.dsmt.serializers.FraudEventDTOEncoder;
 
+import it.unipi.dsmt.Kafka.KafkaManager;
 import it.unipi.dsmt.serializers.TripEventDTOEncoder;
 import it.unipi.dsmt.utility.Params;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 @ServerEndpoint(value = "/events/trip-reports", encoders = TripEventDTOEncoder.class)
 public class TripEventEndpoint implements EventEndpoint {
@@ -31,26 +30,27 @@ public class TripEventEndpoint implements EventEndpoint {
     private static final List<Session> sessions = Collections.synchronizedList(new ArrayList<>());
 
     // Executor service for managing Kafka consumer tasks
-    private static final ExecutorService executorService = Executors.newFixedThreadPool(Params.THREADS);
+    private static final ExecutorService executor = Executors.newFixedThreadPool(Params.THREADS);
 
     // List to store futures of Kafka consumer tasks
-    private static final List<Future<?>> consumerFutures = new ArrayList<>();
+    private static final ArrayList<Future<?>> consumers = new ArrayList<>();
+    private static int currentActivePartitions = Params.PARTITIONS_PER_TOPIC;
 
     static {
-        for (int i = 0; i < Params.PARTITIONS_PER_TOPIC; i++) {
-            // Create a new Kafka consumer
-            KafkaConsumer<String, String> consumer =
-                    KafkaUtils.createKafkaConsumer(Params.TOPIC_TRIPS, Params.TRIPS_DATA_GROUP);
+        KafkaManager.startConsumers(
+                currentActivePartitions,
+                sessions,
+                consumers,
+                executor,
+                Params.TOPIC_TRIPS,
+                Params.TRIPS_GROUP,
+                FraudEventDTO.class);
 
-            // Create a new task to consume Kafka messages
-            Runnable kafkaTask = () -> {
-                KafkaUtils.consumeKafkaMessages(consumer, sessions, TripEventDTO.class);
-            };
+        // Create a new task to dynamically handle KafkaConsumers
+        Runnable handleKafkaConsumers = TripEventEndpoint::handleConsumers;
 
-            // Submit the Kafka task to the executor service and store the future
-            Future<?> future = executorService.submit(kafkaTask);
-            consumerFutures.add(future);
-        }
+        // Submit the task to the executor service
+        executor.submit(handleKafkaConsumers);
     }
 
     @OnOpen
@@ -59,7 +59,13 @@ public class TripEventEndpoint implements EventEndpoint {
         sessions.add(session);
 
         // Check and restart completed Kafka consumer tasks
-        restartConsumers();
+        KafkaManager.restartConsumers(
+                consumers,
+                sessions,
+                executor,
+                Params.TOPIC_TRIPS,
+                Params.TRIPS_GROUP,
+                TripEventDTO.class);
 
         // DEBUG
         logger.info("WebSocket Session OPENED (ID={})", session.getId());
@@ -71,35 +77,68 @@ public class TripEventEndpoint implements EventEndpoint {
         sessions.remove(session);
 
         // Check and restart completed Kafka consumer tasks
-        restartConsumers();
+        KafkaManager.restartConsumers(
+                consumers,
+                sessions,
+                executor,
+                Params.TOPIC_TRIPS,
+                Params.TRIPS_GROUP,
+                TripEventDTO.class);
 
         // DEBUG
         logger.info("WebSocket Session CLOSED (ID={})", session.getId());
         // DEBUG
     }
-    private void restartConsumers() {
-        // Iterate through the consumer futures list
-        synchronized (consumerFutures) {
-            for (Future<?> future : consumerFutures) {
-                // Check if the future is done/completed
-                if (future.isDone()) {
-                    // Remove the completed future from the list
-                    consumerFutures.remove(future);
+    private static void handleConsumers() {
+        while(true) {
+            int numPartitions = KafkaManager.getActivePartitions(Params.TOPIC_TRIPS, currentActivePartitions);
 
-                    // Create a new Kafka consumer
-                    KafkaConsumer<String, String> consumer =
-                            KafkaUtils.createKafkaConsumer(Params.TOPIC_TRIPS,
-                                    Params.TRIPS_DATA_GROUP);
+            try {
+                Thread.sleep(Params.ADMIN_KAFKA_POOL_DURATION);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
 
-                    // Create a new task to consume Kafka messages
-                    Runnable kafkaTask = () -> {
-                        KafkaUtils.consumeKafkaMessages(consumer, sessions, TripEventDTO.class);
-                    };
+            if (numPartitions > Params.THREADS) {
+                // DEBUG
+                logger.info("Too many partitions ({})! No new KafkaConsumer will be added to topic \"{}\")",
+                        numPartitions,
+                        Params.TOPIC_TRIPS);
+                // DEBUG
+                continue;
+            }
 
-                    // Submit the Kafka task to the executor service and store the future
-                    Future<?> newFuture = executorService.submit(kafkaTask);
-                    consumerFutures.add(newFuture);
+            if  (numPartitions > currentActivePartitions) {
+                KafkaManager.startConsumers(
+                        numPartitions - currentActivePartitions,
+                        sessions,
+                        consumers,
+                        executor,
+                        Params.TOPIC_TRIPS,
+                        Params.TRIPS_GROUP,
+                        TripEventDTO.class);
+
+                // DEBUG
+                logger.info("Added {} KafkaConsumer to topic \"{}\"",
+                        numPartitions - currentActivePartitions,
+                        Params.TOPIC_TRIPS);
+                // DEBUG
+
+                currentActivePartitions = numPartitions;
+
+            } else if (numPartitions < currentActivePartitions) {
+                int difference = currentActivePartitions - numPartitions;
+
+                for (var i = 0; i < difference; i++) {
+                    Future<?> toStop = consumers.removeFirst();
+                    toStop.cancel(true);
                 }
+
+                currentActivePartitions = numPartitions;
+            } else {
+                // DEBUG
+                logger.info("Nothing has changed for topic \"{}\"", Params.TOPIC_TRIPS);
+                // DEBUG
             }
         }
     }
