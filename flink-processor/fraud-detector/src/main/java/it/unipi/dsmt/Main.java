@@ -30,6 +30,10 @@ import java.time.Duration;
 public class Main {
 	public static void main(String[] args) throws Exception {
 
+
+		final String remoteKakfaServers = "10.2.1.118:9092,10.2.1.119:9092";
+		final String dockerKakfkaServers = 	"kafka-broker-1:9093,kafka-broker-2:9095";
+
 		// set up the streaming execution environment
 		try (StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment()) {
 
@@ -53,7 +57,7 @@ public class Main {
 */
 
 			KafkaSource<GeoLocalization> tripSource = KafkaSource.<GeoLocalization>builder()
-					.setBootstrapServers("kafka-broker-1:9093,kafka-broker-2:9095")
+					.setBootstrapServers(remoteKakfaServers)
 					.setTopics("cars-data")
 					.setStartingOffsets(OffsetsInitializer.earliest())
 					.setValueOnlyDeserializer(new JsonDeserializationSchema<>(GeoLocalization.class))
@@ -86,7 +90,7 @@ public class Main {
  */
 
 			KafkaSink<TripReport> tripsink = KafkaSink.<TripReport>builder()
-					.setBootstrapServers("kafka-broker-1:9093,kafka-broker-2:9095")
+					.setBootstrapServers(remoteKakfaServers)
 					.setRecordSerializer(
 							KafkaRecordSerializationSchema.builder()
 									.setTopic("trip-reports")

@@ -9,32 +9,32 @@ import org.apache.flink.api.common.state.ValueStateDescriptor;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.functions.KeyedProcessFunction;
 import org.apache.flink.util.Collector;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class TripReportProcessFunction extends KeyedProcessFunction<String,
         GeoLocalization, TripReport> {
+
 
     private ValueState<TripState> tripState;
     private final double litersPerKm = 0.1;
 
     static final Map<String, Double> fuelCosts = new HashMap<>();
-    static {
 
-        // Populate the map with values
+
+
+    public void open(Configuration parameters) throws Exception {
+        tripState = getRuntimeContext().getState(new ValueStateDescriptor<>(
+                "myTripState", TripState.class));
         fuelCosts.put("Compressed Natural Gas", 0.08);
         fuelCosts.put("Diesel", 0.08);
         fuelCosts.put("E-85/Gasoline", 0.07);
         fuelCosts.put("Electric", 0.03);
         fuelCosts.put("Gasoline", 0.09);
         fuelCosts.put("Ethanol", 0.07);
-    }
-
-
-    public void open(Configuration parameters) throws Exception {
-        tripState = getRuntimeContext().getState(new ValueStateDescriptor<>(
-                "myTripState", TripState.class));
     }
 
     // this function processes all geoloc point for a certain vin, and computes total
@@ -67,7 +67,7 @@ public class TripReportProcessFunction extends KeyedProcessFunction<String,
 
 
                 double newConsumption =
-                        newDistance * litersPerKm * fuelCosts.get(tripState.value().car.fuelType);
+                        newDistance * litersPerKm * fuelCosts.get("Gasoline");
                 myState.setCurrentConsumption(newConsumption);
 
                 tripState.update(myState);

@@ -18,4 +18,5 @@ public class Params {
     public static final int THREADS = 2;
     public static final int PARTITIONS_PER_TOPIC = 2;
     public static final int POLL_DURATION = 100;
+    public static final String KAFKA_REMOTE_ENDPOINTS = "10.2.1.118:9092,10.2.1.119:9092";
 }
