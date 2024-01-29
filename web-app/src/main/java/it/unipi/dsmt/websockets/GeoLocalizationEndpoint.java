@@ -1,6 +1,6 @@
 package it.unipi.dsmt.websockets;
 
-import it.unipi.dsmt.Kafka.KafkaUtils;
+import it.unipi.dsmt.Kafka.KafkaManager;
 import it.unipi.dsmt.models.Car;
 import it.unipi.dsmt.DTO.GeoLocalizationDTO;
 import it.unipi.dsmt.serializers.GeoLocalizationDTOEncoder;
@@ -10,8 +10,6 @@ import jakarta.websocket.OnOpen;
 import jakarta.websocket.OnClose;
 import jakarta.websocket.Session;
 import jakarta.websocket.server.ServerEndpoint;
-
-import org.apache.kafka.clients.consumer.KafkaConsumer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,21 +29,28 @@ public class GeoLocalizationEndpoint implements EventEndpoint {
     private static final List<Session> sessions = Collections.synchronizedList(new ArrayList<>());
 
     // Executor service for managing Kafka consumer tasks
-    private static final ExecutorService executorService = Executors.newFixedThreadPool(Params.THREADS);
+    private static final ExecutorService executor = Executors.newFixedThreadPool(Params.THREADS);
 
     // List to store futures of Kafka consumer tasks
-    private static final List<Future<?>> consumerFutures = new ArrayList<>();
+    private static final ArrayList<Future<?>> consumers = new ArrayList<>();
 
     private static int currentActivePartitions = Params.PARTITIONS_PER_TOPIC;
 
     static {
-        startConsumers(currentActivePartitions);
+        KafkaManager.startConsumers(
+                currentActivePartitions,
+                sessions,
+                consumers,
+                executor,
+                Params.TOPIC_CARS,
+                Params.CARS_GROUP,
+                GeoLocalizationDTO.class);
 
         // Create a new task to dynamically handle KafkaConsumers
         Runnable handleKafkaConsumers = GeoLocalizationEndpoint::handleConsumers;
 
-        // Submit the Kafka task to the executor service and store the future
-        Future<?> future = executorService.submit(handleKafkaConsumers);
+        // Submit the task to the executor service
+        executor.submit(handleKafkaConsumers);
     }
     @OnOpen
     public void onOpen(Session session) {
@@ -56,7 +61,13 @@ public class GeoLocalizationEndpoint implements EventEndpoint {
         sendHeadquartersGeoLocalization(session);
 
         // Check and restart completed Kafka consumer tasks
-        restartConsumers();
+        KafkaManager.restartConsumers(
+                consumers,
+                sessions,
+                executor,
+                Params.TOPIC_CARS,
+                Params.CARS_GROUP,
+                GeoLocalizationDTO.class);
 
         // DEBUG
         logger.info("WebSocket Session OPENED (ID={})", session.getId());
@@ -68,7 +79,13 @@ public class GeoLocalizationEndpoint implements EventEndpoint {
         sessions.remove(session);
 
         // Check and restart completed Kafka consumer tasks
-        restartConsumers();
+        KafkaManager.restartConsumers(
+                consumers,
+                sessions,
+                executor,
+                Params.TOPIC_CARS,
+                Params.CARS_GROUP,
+                GeoLocalizationDTO.class);
 
         // DEBUG
         logger.info("WebSocket Session CLOSED (ID={})", session.getId());
@@ -80,51 +97,11 @@ public class GeoLocalizationEndpoint implements EventEndpoint {
                 45.442998228,
                 9.273665572,
                 GeoLocalizationDTO.Type.HEADQUARTER);
-        KafkaUtils.send(session, headquarters);
-    }
-    private static void startConsumers(int numberOfConsumers) {
-        for (var i = 0; i < numberOfConsumers; i++) {
-            // Create a new Kafka consumer
-            KafkaConsumer<String, String> consumer =
-                    KafkaUtils.createKafkaConsumer(Params.TOPIC_CARS, Params.CARS_DATA_GROUP);
-
-            // Create a new task to consume Kafka messages
-            Runnable kafkaTask = () -> {
-                KafkaUtils.consumeKafkaMessages(consumer, sessions, GeoLocalizationDTO.class);
-            };
-
-            // Submit the Kafka task to the executor service and store the future
-            Future<?> future = executorService.submit(kafkaTask);
-            consumerFutures.add(future);
-        }
-    }
-    private static void restartConsumers() {
-        // Iterate through the consumer futures list
-        synchronized (consumerFutures) {
-            for (Future<?> future : consumerFutures) {
-                // Check if the future is done/completed
-                if (future.isDone()) {
-                    // Remove the completed future from the list
-                    consumerFutures.remove(future);
-
-                    // Create a new Kafka consumer
-                    KafkaConsumer<String, String> consumer = KafkaUtils.createKafkaConsumer(Params.TOPIC_CARS, Params.CARS_DATA_GROUP);
-
-                    // Create a new task to consume Kafka messages
-                    Runnable kafkaTask = () -> {
-                        KafkaUtils.consumeKafkaMessages(consumer, sessions, GeoLocalizationDTO.class);
-                    };
-
-                    // Submit the Kafka task to the executor service and store the future
-                    Future<?> newFuture = executorService.submit(kafkaTask);
-                    consumerFutures.add(newFuture);
-                }
-            }
-        }
+        KafkaManager.send(session, headquarters);
     }
     private static void handleConsumers() {
         while(true) {
-            int numPartitions = KafkaUtils.getActivePartitions(Params.TOPIC_CARS, currentActivePartitions);
+            int numPartitions = KafkaManager.getActivePartitions(Params.TOPIC_CARS, currentActivePartitions);
 
             try {
                 Thread.sleep(Params.ADMIN_KAFKA_POOL_DURATION);
@@ -142,7 +119,14 @@ public class GeoLocalizationEndpoint implements EventEndpoint {
             }
 
             if  (numPartitions > currentActivePartitions) {
-                startConsumers(numPartitions - currentActivePartitions);
+                KafkaManager.startConsumers(
+                        numPartitions - currentActivePartitions,
+                        sessions,
+                        consumers,
+                        executor,
+                        Params.TOPIC_CARS,
+                        Params.CARS_GROUP,
+                        GeoLocalizationDTO.class);
 
                 // DEBUG
                 logger.info("Added {} KafkaConsumer to topic \"{}\"",
@@ -156,7 +140,7 @@ public class GeoLocalizationEndpoint implements EventEndpoint {
                 int difference = currentActivePartitions - numPartitions;
 
                 for (var i = 0; i < difference; i++) {
-                    Future<?> toStop = consumerFutures.removeFirst();
+                    Future<?> toStop = consumers.removeFirst();
                     toStop.cancel(true);
                 }
 

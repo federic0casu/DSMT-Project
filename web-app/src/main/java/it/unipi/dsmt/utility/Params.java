@@ -2,7 +2,7 @@ package it.unipi.dsmt.utility;
 
 public class Params {
     public static final String TOPIC_CARS = "cars-data";
-    public static final String CARS_DATA_GROUP = "0";
+    public static final String CARS_GROUP = "0";
     public static final String TOPIC_FRAUDS = "frauds";
     public static final String FRAUDS_GROUP = "1";
     public static final String KAFKA_ENDPOINTS = "kafka-broker-1:9093,kafka-broker-2:9095";

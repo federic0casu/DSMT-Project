@@ -1,12 +1,10 @@
 package it.unipi.dsmt.websockets;
 
 import it.unipi.dsmt.DTO.FraudEventDTO;
-import it.unipi.dsmt.DTO.GeoLocalizationDTO;
-import it.unipi.dsmt.Kafka.KafkaUtils;
+import it.unipi.dsmt.Kafka.KafkaManager;
 import it.unipi.dsmt.serializers.FraudEventDTOEncoder;
 
 import it.unipi.dsmt.utility.Params;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 @ServerEndpoint(value = "/events/frauds", encoders = FraudEventDTOEncoder.class)
 public class FraudEventEndpoint implements EventEndpoint {
@@ -30,26 +27,28 @@ public class FraudEventEndpoint implements EventEndpoint {
     private static final List<Session> sessions = Collections.synchronizedList(new ArrayList<>());
 
     // Executor service for managing Kafka consumer tasks
-    private static final ExecutorService executorService = Executors.newFixedThreadPool(Params.THREADS);
+    private static final ExecutorService executor = Executors.newFixedThreadPool(Params.THREADS);
 
     // List to store futures of Kafka consumer tasks
-    private static final List<Future<?>> consumerFutures = new ArrayList<>();
+    private static final ArrayList<Future<?>> consumers = new ArrayList<>();
+
+    private static int currentActivePartitions = Params.PARTITIONS_PER_TOPIC;
 
     static {
-        for (int i = 0; i < Params.PARTITIONS_PER_TOPIC; i++) {
-            // Create a new Kafka consumer
-            KafkaConsumer<String, String> consumer =
-                    KafkaUtils.createKafkaConsumer(Params.TOPIC_FRAUDS, Params.FRAUDS_GROUP);
+        KafkaManager.startConsumers(
+                currentActivePartitions,
+                sessions,
+                consumers,
+                executor,
+                Params.TOPIC_FRAUDS,
+                Params.FRAUDS_GROUP,
+                FraudEventDTO.class);
 
-            // Create a new task to consume Kafka messages
-            Runnable kafkaTask = () -> {
-                KafkaUtils.consumeKafkaMessages(consumer, sessions, FraudEventDTO.class);
-            };
+        // Create a new task to dynamically handle KafkaConsumers
+        Runnable handleKafkaConsumers = FraudEventEndpoint::handleConsumers;
 
-            // Submit the Kafka task to the executor service and store the future
-            Future<?> future = executorService.submit(kafkaTask);
-            consumerFutures.add(future);
-        }
+        // Submit the task to the executor service
+        executor.submit(handleKafkaConsumers);
     }
 
     @OnOpen
@@ -58,7 +57,13 @@ public class FraudEventEndpoint implements EventEndpoint {
         sessions.add(session);
 
         // Check and restart completed Kafka consumer tasks
-        restartConsumers();
+        KafkaManager.restartConsumers(
+                consumers,
+                sessions,
+                executor,
+                Params.TOPIC_FRAUDS,
+                Params.FRAUDS_GROUP,
+                FraudEventDTO.class);
 
         // DEBUG
         logger.info("WebSocket Session OPENED (ID={})", session.getId());
@@ -70,34 +75,68 @@ public class FraudEventEndpoint implements EventEndpoint {
         sessions.remove(session);
 
         // Check and restart completed Kafka consumer tasks
-        restartConsumers();
+        KafkaManager.restartConsumers(
+                consumers,
+                sessions,
+                executor,
+                Params.TOPIC_FRAUDS,
+                Params.FRAUDS_GROUP,
+                FraudEventDTO.class);
 
         // DEBUG
         logger.info("WebSocket Session CLOSED (ID={})", session.getId());
         // DEBUG
     }
-    private void restartConsumers() {
-        // Iterate through the consumer futures list
-        synchronized (consumerFutures) {
-            for (Future<?> future : consumerFutures) {
-                // Check if the future is done/completed
-                if (future.isDone()) {
-                    // Remove the completed future from the list
-                    consumerFutures.remove(future);
+    private static void handleConsumers() {
+        while(true) {
+            int numPartitions = KafkaManager.getActivePartitions(Params.TOPIC_FRAUDS, currentActivePartitions);
 
-                    // Create a new Kafka consumer
-                    KafkaConsumer<String, String> consumer =
-                            KafkaUtils.createKafkaConsumer(Params.TOPIC_FRAUDS, Params.FRAUDS_GROUP);
+            try {
+                Thread.sleep(Params.ADMIN_KAFKA_POOL_DURATION);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
 
-                    // Create a new task to consume Kafka messages
-                    Runnable kafkaTask = () -> {
-                        KafkaUtils.consumeKafkaMessages(consumer, sessions, GeoLocalizationDTO.class);
-                    };
+            if (numPartitions > Params.THREADS) {
+                // DEBUG
+                logger.info("Too many partitions ({})! No new KafkaConsumer will be added to topic \"{}\")",
+                        numPartitions,
+                        Params.TOPIC_FRAUDS);
+                // DEBUG
+                continue;
+            }
 
-                    // Submit the Kafka task to the executor service and store the future
-                    Future<?> newFuture = executorService.submit(kafkaTask);
-                    consumerFutures.add(newFuture);
+            if  (numPartitions > currentActivePartitions) {
+                KafkaManager.startConsumers(
+                        numPartitions - currentActivePartitions,
+                        sessions,
+                        consumers,
+                        executor,
+                        Params.TOPIC_FRAUDS,
+                        Params.FRAUDS_GROUP,
+                        FraudEventDTO.class);
+
+                // DEBUG
+                logger.info("Added {} KafkaConsumer to topic \"{}\"",
+                        numPartitions - currentActivePartitions,
+                        Params.TOPIC_FRAUDS);
+                // DEBUG
+
+                currentActivePartitions = numPartitions;
+
+            } else if (numPartitions < currentActivePartitions) {
+                int difference = currentActivePartitions - numPartitions;
+
+                for (var i = 0; i < difference; i++) {
+                    Future<?> toStop = consumers.removeFirst();
+                    toStop.cancel(true);
                 }
+
+                currentActivePartitions = numPartitions;
+            } else {
+                // DEBUG
+                logger.info("Nothing has changed for topic \"{}\"", Params.TOPIC_FRAUDS);
+                // DEBUG
             }
         }
     }
