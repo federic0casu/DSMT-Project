@@ -2,7 +2,7 @@ package it.unipi.dsmt.serializers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import it.unipi.dsmt.DTO.GeoLocalizationDTO;
+
 import it.unipi.dsmt.DTO.TripEventDTO;
 import jakarta.websocket.Encoder;
 import org.slf4j.Logger;
@@ -17,7 +17,7 @@ public class TripEventDTOEncoder implements Encoder.Text<TripEventDTO> {
         try {
             json = mapper.writeValueAsString(eventDTO);
         } catch (JsonProcessingException e) {
-            logger.error("Error during GeoLocalizationDTO.encode(): " + e.getMessage());
+            logger.error("Error during TripEventDTO.encode(): " + e.getMessage());
         }
         return json;
     }

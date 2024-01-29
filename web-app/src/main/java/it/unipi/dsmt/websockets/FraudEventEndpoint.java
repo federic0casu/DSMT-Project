@@ -49,7 +49,6 @@ public class FraudEventEndpoint implements EventEndpoint {
         // Submit the task to the executor service
         executor.submit(handleKafkaConsumers);
     }
-
     @OnOpen
     public void onOpen(Session session) {
         // Add the new session to the list

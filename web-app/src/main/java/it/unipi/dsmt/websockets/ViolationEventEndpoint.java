@@ -1,9 +1,9 @@
 package it.unipi.dsmt.websockets;
 
-import it.unipi.dsmt.DTO.TripEventDTO;
-
+import it.unipi.dsmt.DTO.FraudEventDTO;
+import it.unipi.dsmt.models.Violation;
+import it.unipi.dsmt.serializers.ViolationEncoder;
 import it.unipi.dsmt.Kafka.KafkaManager;
-import it.unipi.dsmt.serializers.TripEventDTOEncoder;
 import it.unipi.dsmt.utility.Params;
 
 import org.slf4j.Logger;
@@ -15,21 +15,17 @@ import jakarta.websocket.Session;
 import jakarta.websocket.server.ServerEndpoint;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.List;
-import java.util.concurrent.*;
 
-@ServerEndpoint(value = "/events/trip-reports", encoders = TripEventDTOEncoder.class)
-public class TripEventEndpoint implements EventEndpoint {
-    private static final Logger logger = LoggerFactory.getLogger(TripEventEndpoint.class);
-
-    // List to store WebSocket sessions. It is synchronized to handle concurrent access.
-    private static final List<Session> sessions = Collections.synchronizedList(new ArrayList<>());
-
-    // Executor service for managing Kafka consumer tasks
+@ServerEndpoint(value = "/events/violations", encoders = ViolationEncoder.class)
+public class ViolationEventEndpoint implements EventEndpoint {
+    private static final Logger logger = LoggerFactory.getLogger(ViolationEventEndpoint.class);
+    private static final List<Session> sessions = new CopyOnWriteArrayList<>();
     private static final ExecutorService executor = Executors.newFixedThreadPool(Params.THREADS);
-
-    // List to store futures of Kafka consumer tasks
     private static final ArrayList<Future<?>> consumers = new ArrayList<>();
     private static int currentActivePartitions = Params.PARTITIONS_PER_TOPIC;
 
@@ -39,17 +35,16 @@ public class TripEventEndpoint implements EventEndpoint {
                 sessions,
                 consumers,
                 executor,
-                Params.TOPIC_TRIPS,
-                Params.TRIPS_GROUP,
-                TripEventDTO.class);
+                Params.TOPIC_VIOLATIONS,
+                Params.VIOLATIONS_GROUP,
+                FraudEventDTO.class);
 
         // Create a new task to dynamically handle KafkaConsumers
-        Runnable handleKafkaConsumers = TripEventEndpoint::handleConsumers;
+        Runnable handleKafkaConsumers = ViolationEventEndpoint::handleConsumers;
 
         // Submit the task to the executor service
         executor.submit(handleKafkaConsumers);
     }
-
     @OnOpen
     public void onOpen(Session session) {
         // Add the new session to the list
@@ -60,9 +55,9 @@ public class TripEventEndpoint implements EventEndpoint {
                 consumers,
                 sessions,
                 executor,
-                Params.TOPIC_TRIPS,
-                Params.TRIPS_GROUP,
-                TripEventDTO.class);
+                Params.TOPIC_VIOLATIONS,
+                Params.VIOLATIONS_GROUP,
+                Violation.class);
 
         // DEBUG
         logger.info("WebSocket Session OPENED (ID={})", session.getId());
@@ -78,17 +73,18 @@ public class TripEventEndpoint implements EventEndpoint {
                 consumers,
                 sessions,
                 executor,
-                Params.TOPIC_TRIPS,
-                Params.TRIPS_GROUP,
-                TripEventDTO.class);
+                Params.TOPIC_VIOLATIONS,
+                Params.VIOLATIONS_GROUP,
+                Violation.class);
 
         // DEBUG
         logger.info("WebSocket Session CLOSED (ID={})", session.getId());
         // DEBUG
     }
+
     private static void handleConsumers() {
         while(true) {
-            int numPartitions = KafkaManager.getActivePartitions(Params.TOPIC_TRIPS, currentActivePartitions);
+            int numPartitions = KafkaManager.getActivePartitions(Params.TOPIC_VIOLATIONS, currentActivePartitions);
 
             try {
                 Thread.sleep(Params.ADMIN_KAFKA_POOL_DURATION);
@@ -100,7 +96,7 @@ public class TripEventEndpoint implements EventEndpoint {
                 // DEBUG
                 logger.info("Too many partitions ({})! No new KafkaConsumer will be added to topic \"{}\")",
                         numPartitions,
-                        Params.TOPIC_TRIPS);
+                        Params.TOPIC_VIOLATIONS);
                 // DEBUG
                 continue;
             }
@@ -111,14 +107,14 @@ public class TripEventEndpoint implements EventEndpoint {
                         sessions,
                         consumers,
                         executor,
-                        Params.TOPIC_TRIPS,
-                        Params.TRIPS_GROUP,
-                        TripEventDTO.class);
+                        Params.TOPIC_VIOLATIONS,
+                        Params.VIOLATIONS_GROUP,
+                        Violation.class);
 
                 // DEBUG
                 logger.info("Added {} KafkaConsumer to topic \"{}\"",
                         numPartitions - currentActivePartitions,
-                        Params.TOPIC_TRIPS);
+                        Params.TOPIC_VIOLATIONS);
                 // DEBUG
 
                 currentActivePartitions = numPartitions;
@@ -134,7 +130,7 @@ public class TripEventEndpoint implements EventEndpoint {
                 currentActivePartitions = numPartitions;
             } else {
                 // DEBUG
-                logger.info("Nothing has changed for topic \"{}\"", Params.TOPIC_TRIPS);
+                logger.info("Nothing has changed for topic \"{}\"", Params.TOPIC_VIOLATIONS);
                 // DEBUG
             }
         }
