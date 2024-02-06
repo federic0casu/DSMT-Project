@@ -1,14 +1,20 @@
-const fraudEventSocket = new WebSocket('ws://localhost:8080/web-app/events/frauds');
+const host = document.location.host;
+const fraudEventSocket = new WebSocket('ws://' + host + '/web-app/events/frauds');
 const tableBody = document.querySelector("#eventTable tbody");
 
-const MAX_ROWS = 10;  // Maximum number of rows to keep in the table
+const MAX_ROWS = 10;
+
+fraudEventSocket.onopen = function (event) {
+    console.log("WebSocket OPENED (url='ws://" + host + "/web-app/events/frauds')");
+};
 
 fraudEventSocket.onmessage = function (event) {
     const eventData = JSON.parse(event.data);
 
     // Create a new row
     let newRow = document.createElement("tr");
-    newRow.innerHTML = "<td>" + eventData.timestamp + "</td>" +
+    newRow.innerHTML =
+        "<td>" + eventData.timestamp + "</td>" +
         "<td>" + eventData.customerId + "</td>" +
         "<td>" + eventData.fraudType + "</td>"+
         "<td>" + eventData.customer.name + "</td>" +

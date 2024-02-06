@@ -8,11 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
-
 public class TripEventDTO {
-
-
         public Car car;
         public double consumption;
         public double distance;
