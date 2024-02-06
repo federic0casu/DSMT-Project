@@ -1,0 +1,11 @@
+C:\Users\ardui\Documents\GitHub\DSMT-Project\flink-processor\violation-detector\src\main\java\it\unipi\dsmt\functions\InactivityViolationFunction.java
+C:\Users\ardui\Documents\GitHub\DSMT-Project\flink-processor\violation-detector\src\main\java\it\unipi\dsmt\models\Car.java
+C:\Users\ardui\Documents\GitHub\DSMT-Project\flink-processor\violation-detector\src\main\java\it\unipi\dsmt\models\SpeedingViolation.java
+C:\Users\ardui\Documents\GitHub\DSMT-Project\flink-processor\violation-detector\src\main\java\it\unipi\dsmt\models\SpeedLimit.java
+C:\Users\ardui\Documents\GitHub\DSMT-Project\flink-processor\violation-detector\src\main\java\it\unipi\dsmt\serializers\InactivityViolationSerializer.java
+C:\Users\ardui\Documents\GitHub\DSMT-Project\flink-processor\violation-detector\src\main\java\it\unipi\dsmt\functions\SpeedingViolationFunction.java
+C:\Users\ardui\Documents\GitHub\DSMT-Project\flink-processor\violation-detector\src\main\java\it\unipi\dsmt\models\InactivityViolation.java
+C:\Users\ardui\Documents\GitHub\DSMT-Project\flink-processor\violation-detector\src\main\java\it\unipi\dsmt\models\GeoLocalizationEvent.java
+C:\Users\ardui\Documents\GitHub\DSMT-Project\flink-processor\violation-detector\src\main\java\it\unipi\dsmt\models\Violation.java
+C:\Users\ardui\Documents\GitHub\DSMT-Project\flink-processor\violation-detector\src\main\java\it\unipi\dsmt\Main.java
+C:\Users\ardui\Documents\GitHub\DSMT-Project\flink-processor\violation-detector\src\main\java\it\unipi\dsmt\serializers\SpeedingViolationSerializer.java

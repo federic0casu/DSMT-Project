@@ -1,0 +1,16 @@
+it\unipi\dsmt\functions\SpeedingViolationFunction.class
+it\unipi\dsmt\models\GeoLocalizationEvent$Type.class
+it\unipi\dsmt\models\Car.class
+it\unipi\dsmt\serializers\SpeedingViolationSerializer.class
+it\unipi\dsmt\models\Car$CarBuilder.class
+it\unipi\dsmt\Main.class
+it\unipi\dsmt\models\Violation$ViolationBuilder.class
+it\unipi\dsmt\functions\SpeedingViolationFunction$1.class
+it\unipi\dsmt\models\Violation.class
+it\unipi\dsmt\models\SpeedingViolation.class
+it\unipi\dsmt\models\InactivityViolation.class
+it\unipi\dsmt\functions\InactivityViolationFunction.class
+it\unipi\dsmt\models\GeoLocalizationEvent.class
+it\unipi\dsmt\models\SpeedLimit$SpeedLimitBuilder.class
+it\unipi\dsmt\serializers\InactivityViolationSerializer.class
+it\unipi\dsmt\models\SpeedLimit.class
