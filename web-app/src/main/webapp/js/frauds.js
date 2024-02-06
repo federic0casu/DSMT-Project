@@ -11,8 +11,6 @@ fraudEventSocket.onopen = function (event) {
 fraudEventSocket.onmessage = function (event) {
     const eventData = JSON.parse(event.data);
 
-    console.log(eventData);
-
     // Create a new row
     let newRow = document.createElement("tr");
     newRow.innerHTML =

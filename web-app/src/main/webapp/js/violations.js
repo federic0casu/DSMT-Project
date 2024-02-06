@@ -1,8 +1,5 @@
-const host = document.location.host;
 const violationEventSocket = new WebSocket('ws://' + host + '/web-app/events/violations');
 const violationsTableBody = document.querySelector("#speedingViolationsTable tbody");
-
-const MAX_ROWS = 10;
 
 violationEventSocket.onopen = function (event) {
     console.log("WebSocket OPENED (url='ws://" + host + "/web-app/events/violations')");
@@ -10,8 +7,6 @@ violationEventSocket.onopen = function (event) {
 
 violationEventSocket.onmessage = function (event) {
     const violationData = JSON.parse(event.data);
-
-    console.log(violationData);
 
     // Format the date
     const date = new Date(violationData.violationTs);

@@ -37,7 +37,7 @@ public class ViolationEventEndpoint implements EventEndpoint {
                 executor,
                 Params.TOPIC_VIOLATIONS,
                 Params.VIOLATIONS_GROUP,
-                FraudEventDTO.class);
+                Violation.class);
 
         // Create a new task to dynamically handle KafkaConsumers
         Runnable handleKafkaConsumers = ViolationEventEndpoint::handleConsumers;

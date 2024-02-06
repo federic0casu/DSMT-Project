@@ -77,7 +77,7 @@ class CarTask implements Runnable {
                         double v = timeMillis > 1 ? (timeMillis * 0.1) : (timeMillis * 0.25);
                         double min = timeMillis - v;
                         double max = timeMillis + v;
-                        long waitingTime = 750;
+                        long waitingTime = random.nextInt((int) (max - min + 1)) + (int) min;
 
                         // Calculate current speed, avoiding division by zero
                         double currentSpeed = (waitingTime != 0) ?
