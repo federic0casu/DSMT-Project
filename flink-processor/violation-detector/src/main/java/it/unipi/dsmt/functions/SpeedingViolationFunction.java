@@ -100,19 +100,22 @@ public class SpeedingViolationFunction extends KeyedProcessFunction<String, GeoL
 
             LOG.info("last_event: timestamp {} - coordinates: {} , {}", lastTwoEvents.get(0).getTimestamp(), lastTwoEvents.get(0).getLat().doubleValue(), lastTwoEvents.get(0).getLon().doubleValue());
             LOG.info("current_event: timestamp {} - coordinates: {} , {}", lastTwoEvents.get(1).getTimestamp(), lastTwoEvents.get(1).getLat().doubleValue(), lastTwoEvents.get(1).getLon().doubleValue());
-            LOG.info("distance: {} - time: {} -> speed: {}, currentSpeedLimit: {}", distance, time, speed, currentSpeedLimit);
+            LOG.info("distance: {} - time: {} -> speed: {}, currentSpeedLimit: {}", distance, time, speed, (currentSpeedLimit!=null)?currentSpeedLimit.getMaxSpeed():"null");
 
-            if (currentSpeedLimit != null){
+
+            if (currentSpeedLimit != null && currentSpeedLimit.getWayName() != null && !currentSpeedLimit.getWayName().isEmpty()){
                 // se sono riuscito a recuperare il limite di velocità della strada che si sta percorrendo
 
-                if (speed > currentSpeedLimit.getMaxSpeed() && speed>0 && speed<251){
+                LOG.info("Car {} is moving at {} km/h in {}\n", event.getCar().getVin(), speed, currentSpeedLimit.getWayName());
+
+                if (speed > currentSpeedLimit.getMaxSpeed() && speed>0/* && speed<251*/){
                     // se c'è stata una violazione di velocità
 
                     if(lastSpeedingViolation == null || !currentSpeedLimit.getWayName().equals(lastSpeedingViolation.getWayName())){
                         // se non è già stata segnalata una violazione per la stessa strada
 
                         state.update(Pair.of(lastTwoEvents, currentSpeedLimit));
-                        out.collect(new Violation(event.getCar().getVin(), lastTwoEvents.get(1).getTimestamp(), speed, currentSpeedLimit));
+                        out.collect(new Violation(lastTwoEvents.get(1).getTimestamp(), event.getCar().getVin(), speed, currentSpeedLimit));
                     }
                     else {
                         // se è già stata segnalata una violazione per la stessa strada
@@ -127,6 +130,7 @@ public class SpeedingViolationFunction extends KeyedProcessFunction<String, GeoL
                 }
             }
             else{
+                LOG.info("\n");
                 // NON sono riuscito a recuperare il limite di velocità della strada che si sta percorrendo
                 // di conseguenza NON so se c'è stata una violazione di velocità, quindi quello che faccio è
                 // lasciare invariato lo stato

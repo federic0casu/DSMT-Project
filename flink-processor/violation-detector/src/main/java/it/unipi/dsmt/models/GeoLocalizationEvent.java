@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GeoLocalizationEvent {
-    public long timestamp;
     @JsonProperty("car")
     public Car car;
     @JsonProperty("lat")
@@ -21,6 +20,8 @@ public class GeoLocalizationEvent {
     public Longitude lon;   // Longitude
     @JsonProperty("type")
     public Type type;
+    @JsonProperty("timestamp")
+    public long timestamp;
 
     public enum Type {
         HEADQUARTER,
