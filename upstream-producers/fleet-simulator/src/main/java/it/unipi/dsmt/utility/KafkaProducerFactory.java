@@ -15,7 +15,7 @@ public class KafkaProducerFactory {
     public KafkaProducer<String, String> createKafkaProducer() {
         Properties props = new Properties();
 
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, Params.REMOTE_KAKFA_SERVERS);
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, Params.SERVERS);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, Params.KEY_SERIALIZER_CLASS);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, Params.VALUE_SERIALIZER_CLASS);
 
