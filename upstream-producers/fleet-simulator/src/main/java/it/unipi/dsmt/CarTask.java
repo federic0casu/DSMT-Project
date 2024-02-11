@@ -74,7 +74,7 @@ class CarTask implements Runnable {
                                         p.getLatitude().doubleValue(),
                                         p.getLongitude().doubleValue());
                         double timeMillis = (distance / Params.AVG_SPEED) * 60 * 60 * 1000; // time in milliseconds
-                        double v = timeMillis > 1 ? (timeMillis * 0.1) : (timeMillis * 0.25);
+                        double v = timeMillis > 1 ? (timeMillis * 0.125) : (timeMillis * 0.5);
                         double min = timeMillis - v;
                         double max = timeMillis + v;
                         long waitingTime = random.nextInt((int) (max - min + 1)) + (int) min;
