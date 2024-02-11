@@ -15,6 +15,8 @@ public class GeoLocalizationDTO {
     public Latitude lat; // Latitude
     public Longitude lon; // Longitude
     public Type type;
+    public long timestamp;
+
     public enum Type {
         HEADQUARTER,
         START,
@@ -26,5 +28,12 @@ public class GeoLocalizationDTO {
         this.lat = Latitude.ofDegrees(latitude);
         this.lon = Longitude.ofDegrees(longitude);
         this.type = type;
+    }
+    public GeoLocalizationDTO(Car car, double latitude, double longitude, Type type, long timestamp) {
+        this.car = car;
+        this.lat = Latitude.ofDegrees(latitude);
+        this.lon = Longitude.ofDegrees(longitude);
+        this.type = type;
+        this.timestamp = timestamp;
     }
 }

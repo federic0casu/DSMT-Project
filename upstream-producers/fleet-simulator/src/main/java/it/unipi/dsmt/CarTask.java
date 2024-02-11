@@ -16,6 +16,7 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.event.Level;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -61,7 +62,8 @@ class CarTask implements Runnable {
                         this.car,
                         firstPoint.getLatitude(),
                         firstPoint.getLongitude(),
-                        GeoLocalizationEvent.Type.START);
+                        GeoLocalizationEvent.Type.START,
+                        System.currentTimeMillis());
 
                 // MOVING EVENTS
                 boolean first = true;
@@ -77,19 +79,20 @@ class CarTask implements Runnable {
                         double v = timeMillis > 1 ? (timeMillis * 0.125) : (timeMillis * 0.5);
                         double min = timeMillis - v;
                         double max = timeMillis + v;
-                        long waitingTime = random.nextInt((int) (max - min + 1)) + (int) min;
+                        //long waitingTime = random.nextInt((int) (max - min + 1)) + (int) min;
+                        long waitingTime = (long) random.nextInt((int) (max - min + 1)) + (int) min;
 
                         // Calculate current speed, avoiding division by zero
-                        double currentSpeed = (waitingTime != 0) ?
-                                distance / (waitingTime / (60.0 * 60.0 * 1000.0)) : Double.POSITIVE_INFINITY;
+                        double currentSpeed = distance / (waitingTime / (60.0 * 60.0 * 1000.0));
 
                         // DEBUG
                         logger.info("Car {} >> current speed = {} [km/h], simulated time = {} [s]",
                                 car.getVin(),
                                 currentSpeed,
-                                waitingTime / 1000); // simulated time to cover distance in seconds
-                        // DEBUG
+                                (float)waitingTime / 1000 // simulated time to cover distance in seconds
+                        );
 
+                        // DEBUG
                         try {
                             Thread.sleep(waitingTime);
                         } catch (InterruptedException e) {
@@ -99,7 +102,10 @@ class CarTask implements Runnable {
                                 this.car,
                                 p.getLatitude(),
                                 p.getLongitude(),
-                                GeoLocalizationEvent.Type.MOVE);
+                                GeoLocalizationEvent.Type.MOVE,
+                                System.currentTimeMillis()
+                                );
+                        previous = p;
                     } else
                         first = false;
                 }
@@ -110,7 +116,9 @@ class CarTask implements Runnable {
                         this.car,
                         lastPoint.getLatitude(),
                         lastPoint.getLongitude(),
-                        GeoLocalizationEvent.Type.END);
+                        GeoLocalizationEvent.Type.END,
+                        System.currentTimeMillis()
+                );
 
                 // DEBUG
                 logger.info("Ended trip {} for car {}", gpxPath.getFileName(), car.getVin());
@@ -123,16 +131,22 @@ class CarTask implements Runnable {
         }
     }
     private void sendEvent(KafkaProducer<String, String> producer,
-                           Car car, Latitude lat, Longitude lon, GeoLocalizationEvent.Type type) {
-        GeoLocalizationEvent event = new GeoLocalizationEvent(car, lat, lon, type);
+                           Car car, Latitude lat, Longitude lon, GeoLocalizationEvent.Type type, long ts) {
+        GeoLocalizationEvent event = new GeoLocalizationEvent(car, lat, lon, type, ts);
         try {
             ProducerRecord<String, String> record = new ProducerRecord<>(
                     Params.TOPIC,
                     new ObjectMapper().writeValueAsString(event));
 
+            System.out.println("sent: " + new ObjectMapper().writeValueAsString(event) + '\n');
+
+
             producer.send(record, (metadata, exception) -> {
-                if (exception == null)
-                    logger.info("Car {} >> Message sent to partition {}", car.getVin(), metadata.partition());
+//                if (exception == null)
+//                    logger.info("Car {} >> Sent event: {} - timestamp: {}",
+//                            car.getVin(),
+//                            type,
+//                            ts);
             });
 
             producer.flush();
