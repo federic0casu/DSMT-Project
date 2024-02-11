@@ -20,17 +20,19 @@ public class Violation {
     // da InactivityViolation
     public long tsLastActivity;
 
-    public Violation(String vin, long violationTs){
+    public Violation(long violationTs, String vin){
         this.vin = vin;
         this.violationTs = violationTs;
     }
-    public Violation(String vin, long violationTs, int userSpeed, SpeedLimit speedLimit){
+
+    public Violation(long violationTs, String vin, int userSpeed, SpeedLimit speedLimit){
         this.vin = vin;
         this.violationTs = violationTs;
         this.userSpeed = userSpeed;
         this.speedLimit = speedLimit;
     }
-    public Violation(String vin, long violationTs, long tsLastActivity){
+
+    public Violation(long violationTs, String vin, long tsLastActivity){
         this.vin = vin;
         this.violationTs = violationTs;
         this.tsLastActivity = tsLastActivity;

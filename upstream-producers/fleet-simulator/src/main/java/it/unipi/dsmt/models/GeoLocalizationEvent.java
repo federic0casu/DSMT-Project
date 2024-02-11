@@ -13,6 +13,7 @@ public class GeoLocalizationEvent {
     public Latitude lat; // Latitude
     public Longitude lon; // Longitude
     public Type type;
+    public long timestamp;
 
     public enum Type {
         HEADQUARTER,
