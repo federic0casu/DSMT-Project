@@ -10,7 +10,7 @@ violationEventSocket.onmessage = function (event) {
     const violationData = JSON.parse(event.data);
 
     // Controlla se il messaggio è una violazione di inattività
-    if (violationData.tsLastActivity!=0 && (violationData.userSpeed==0 && !violationData.speedLimit)) {
+    if (violationData.tsLastActivity !==0 && (violationData.userSpeed === 0 && !violationData.speedLimit)) {
         addRowToTable(inactivityViolationsTableBody, [
             violationData.vin,
             formatTimestamp(violationData.violationTs),

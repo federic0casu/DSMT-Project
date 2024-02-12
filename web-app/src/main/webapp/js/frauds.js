@@ -14,7 +14,6 @@ fraudEventSocket.onmessage = function (event) {
     // Create a new row
     let newRow = document.createElement("tr");
     newRow.innerHTML =
-        "<td>" + eventData.timestamp + "</td>" +
         "<td>" + eventData.customerId + "</td>" +
         "<td>" + eventData.fraudType + "</td>"+
         "<td>" + eventData.customer.name + "</td>" +

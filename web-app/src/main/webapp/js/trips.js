@@ -1,4 +1,6 @@
-const tripReportsSocket = new WebSocket('ws://localhost:8080/web-app/events/trip-reports');
+let url = "ws://" + host + "/web-app/events/trip-reports";
+
+const tripReportsSocket = new WebSocket(url);
 
 tripReportsSocket.onmessage = function (event) {
     const carData = JSON.parse(event.data);
