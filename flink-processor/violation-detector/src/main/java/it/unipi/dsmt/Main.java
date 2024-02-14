@@ -61,33 +61,7 @@ public class Main {
                             // per determinare quando generare watermark.
                     , "Kafka Source");
 
-//            // Configurazione dell'ObjectMapper con i serializzatori personalizzati
-//            ObjectMapper mapper = new ObjectMapper();
-//            SimpleModule module = new SimpleModule();
-//            module.addSerializer(SpeedingViolation.class, new SpeedingViolationSerializer());
-//            module.addSerializer(InactivityViolation.class, new InactivityViolationSerializer());
-//            mapper.registerModule(module);
-//
-//            // Creazione del KafkaRecordSerializationSchema personalizzato
-//            KafkaRecordSerializationSchema<Violation> serializationSchema = new KafkaRecordSerializationSchema<Violation>() {
-//                @Override
-//                public ProducerRecord<byte[], byte[]> serialize(Violation element, KafkaSinkContext context, Long timestamp) {
-//                    try {
-//                        String json = mapper.writeValueAsString(element);
-//                        return new ProducerRecord<>("violations", json.getBytes(StandardCharsets.UTF_8));
-//                    } catch (JsonProcessingException e) {
-//                        throw new RuntimeException("Failed to serialize Violation", e);
-//                    }
-//                }
-//            };
-//
-//            // Configurazione del KafkaSink
-//            KafkaSink<Violation> sink = KafkaSink.<Violation>builder()
-//                    .setBootstrapServers("kafka:9093")
-//                    .setRecordSerializer(serializationSchema)
-//                    .setDeliveryGuarantee(DeliveryGuarantee.AT_LEAST_ONCE)
-//                    .build();
-
+            // sink Kafka (KafkaSink) per inviare i dati al topic "violations" su un server Kafka
             KafkaSink<Violation> sink = KafkaSink.<Violation>builder()
                     .setBootstrapServers(Params.LOCAL_KAFKA_BROKER)
                     .setRecordSerializer(
