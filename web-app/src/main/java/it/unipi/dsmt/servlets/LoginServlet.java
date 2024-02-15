@@ -22,6 +22,7 @@ public class LoginServlet extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(LoginServlet.class);
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        /*
         try {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
@@ -58,5 +59,7 @@ public class LoginServlet extends HttpServlet {
             System.err.println(e.getMessage());
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
+        */
+        response.sendRedirect("pages/map.html"); // Redirect to the dashboard
     }
 }

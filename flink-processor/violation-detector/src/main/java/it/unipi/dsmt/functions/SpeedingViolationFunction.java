@@ -38,8 +38,6 @@ import org.apache.commons.lang3.tuple.Pair;
 public class SpeedingViolationFunction extends KeyedProcessFunction<String, GeoLocalizationEvent, Violation> {
     private static final Logger LOG = LoggerFactory.getLogger(SpeedingViolationFunction.class);
     private transient ValueState< Pair<LinkedList<GeoLocalizationEvent>, SpeedLimit> > state;
-    // LinkedList<GeoLocalizationEvent> : last two events
-    // SpeedLimit : last speed limit
 
     @Override
     public void open(Configuration parameters) throws Exception {
@@ -98,9 +96,9 @@ public class SpeedingViolationFunction extends KeyedProcessFunction<String, GeoL
                     lastTwoEvents.get(0).getLat().doubleValue(),
                     lastTwoEvents.get(0).getLon().doubleValue());
 
-            LOG.info("last_event: timestamp {} - coordinates: {} , {}", lastTwoEvents.get(0).getTimestamp(), lastTwoEvents.get(0).getLat().doubleValue(), lastTwoEvents.get(0).getLon().doubleValue());
-            LOG.info("current_event: timestamp {} - coordinates: {} , {}", lastTwoEvents.get(1).getTimestamp(), lastTwoEvents.get(1).getLat().doubleValue(), lastTwoEvents.get(1).getLon().doubleValue());
-            LOG.info("distance: {} - time: {} -> speed: {}, currentSpeedLimit: {}", distance, time, speed, (currentSpeedLimit!=null)?currentSpeedLimit.getMaxSpeed():"null");
+            // LOG.info("last_event: timestamp {} - coordinates: {} , {}", lastTwoEvents.get(0).getTimestamp(), lastTwoEvents.get(0).getLat().doubleValue(), lastTwoEvents.get(0).getLon().doubleValue());
+            // LOG.info("current_event: timestamp {} - coordinates: {} , {}", lastTwoEvents.get(1).getTimestamp(), lastTwoEvents.get(1).getLat().doubleValue(), lastTwoEvents.get(1).getLon().doubleValue());
+            // LOG.info("distance: {} - time: {} -> speed: {}, currentSpeedLimit: {}", distance, time, speed, (currentSpeedLimit!=null)?currentSpeedLimit.getMaxSpeed():"null");
 
 
             if (currentSpeedLimit != null && currentSpeedLimit.getWayName() != null && !currentSpeedLimit.getWayName().isEmpty()){
@@ -130,7 +128,6 @@ public class SpeedingViolationFunction extends KeyedProcessFunction<String, GeoL
                 }
             }
             else{
-                LOG.info("\n");
                 // NON sono riuscito a recuperare il limite di velocità della strada che si sta percorrendo
                 // di conseguenza NON so se c'è stata una violazione di velocità, quindi quello che faccio è
                 // lasciare invariato lo stato
@@ -138,27 +135,6 @@ public class SpeedingViolationFunction extends KeyedProcessFunction<String, GeoL
             }
         }
     }
-
-//    // HAVERSINE FORMULA TO CALCULATE DISTANCE BETWEEN TWO POSITIONS
-//    // https://en.wikipedia.org/wiki/Haversine_formula
-//    // Better to use some library with more precision, but good for now
-//    double calculateDistance(double startLat, double startLong, double endLat, double endLong) {
-//        int EARTH_RADIUS = 6371;
-//        double dLat = Math.toRadians((endLat - startLat));
-//        double dLong = Math.toRadians((endLong - startLong));
-//
-//        startLat = Math.toRadians(startLat);
-//        endLat = Math.toRadians(endLat);
-//
-//        double a = haversine(dLat) + Math.cos(startLat) * Math.cos(endLat) * haversine(dLong);
-//        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-//
-//        return EARTH_RADIUS * c;
-//    }
-//
-//    double haversine(double val) {
-//        return Math.pow(Math.sin(val / 2), 2);
-//    }
 
     /**
      * Calcola la distanza approssimativa in chilometri tra due punti geografici.

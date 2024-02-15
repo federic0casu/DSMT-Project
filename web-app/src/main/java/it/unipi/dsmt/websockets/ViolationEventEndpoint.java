@@ -1,6 +1,5 @@
 package it.unipi.dsmt.websockets;
 
-import it.unipi.dsmt.DTO.FraudEventDTO;
 import it.unipi.dsmt.models.Violation;
 import it.unipi.dsmt.serializers.ViolationEncoder;
 import it.unipi.dsmt.Kafka.KafkaManager;

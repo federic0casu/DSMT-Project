@@ -10,17 +10,6 @@ import org.apache.flink.api.common.state.ValueStateDescriptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-//      TEORIA
-// Keyed Context:
-// Poiché stai utilizzando una KeyedProcessFunction, il contesto è "chiaviato". Significa che tutte le
-// operazioni eseguite all'interno della processElement o onTimer sono specifiche per la chiave corrente
-// (il vin dell'auto in questo caso).
-
-// Stato e Timer per Chiave:
-// Flink mantiene uno stato e i timer separati per ogni chiave. Quando processi un elemento o quando scade
-// un timer, hai accesso allo stato e ai timer specifici per quella chiave. Ciò significa che ogni auto
-// (ogni vin) ha il proprio stato indipendente e timer.
-
 public class InactivityViolationFunction extends KeyedProcessFunction<String, GeoLocalizationEvent, Violation> {
     private static final Logger LOG = LoggerFactory.getLogger(SpeedingViolationFunction.class);
     private transient ValueState<Long> lastUpdateTs_state;
