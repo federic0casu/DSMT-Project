@@ -1,5 +1,11 @@
-# Fraud Detection Project
+# Real Time Fleet Monitoring
 
+### Abstract
+The objective of this project is to monitor a fleet of vehicles in a car-sharing service by tracking their movements, checking for potential speed violations, and monitoring any potential fraud related to vehicle reservations.
+
+<p align="center">
+  <img src="https://balin.app/assets/img/img-gps-tracking.png" alt="GPS_tracking" width="550" />
+</p>
 
 ## Use cases
 
@@ -31,3 +37,5 @@ The system must allow an *Admin* to:
 2. MySQL (to support login, vehicles and logging system).
 
 3. Apache Kafka (3 topics: vehicles, transactions and frauds).
+
+4. Apache Flink (to process the data from the Kafka topics).
